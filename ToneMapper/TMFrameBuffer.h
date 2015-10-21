@@ -1,23 +1,18 @@
-//
-//  TMFrameBuffer.h
-//  ToneMapper
-//
-//  Created by Hagai Weinfeld on 10/11/15.
-//  Copyright (c) 2015 Lightricks Ltd. All rights reserved.
-//
+// Copyright (c) 2015 Lightricks. All rights reserved.
+// Created by Hagai Weinfeld.
 
 #import <Foundation/Foundation.h>
 @import GLKit;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Defines a bindable frame buffer object.
+/// Protocol that should be implemented by openGL wrapping objects.
 @protocol TMFrameBuffer <NSObject>
 
-/// Bind the frame buffer.
+/// Binds the frame buffer.
 - (void)bind;
 
-/// The size of the frame-buffer.
+/// Size of the frame-buffer.
 @property (readonly, nonatomic) CGSize size;
 
 @end

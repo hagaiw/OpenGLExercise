@@ -1,13 +1,9 @@
-//
-//  TMProgram.m
-//  ToneMapper
-//
-//  Created by Hagai Weinfeld on 10/8/15.
-//  Copyright (c) 2015 Lightricks Ltd. All rights reserved.
-//
+// Copyright (c) 2015 Lightricks. All rights reserved.
+// Created by Hagai Weinfeld.
 
 #import "TMProgram.h"
 
+#import "TMScalarUniform.h"
 #import "TMMutableHandleDictionary.h"
 #import "TMShaderFactory.h"
 #import "TMShader.h"
@@ -109,8 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
   glUseProgram(self.program);
 }
 
-- (void)bindScalarParameter:(TMScalarAttribute *)scalarParameter {
-  glUniform1f([self.handlesForUniforms handleForKey:scalarParameter.name], scalarParameter.value);
+- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform {
+  glUniform1f([self.handlesForUniforms handleForKey:scalarUniform.name], scalarUniform.value);
 }
 
 #pragma mark -

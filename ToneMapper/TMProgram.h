@@ -1,20 +1,15 @@
-//
-//  TMProgram.h
-//  ToneMapper
-//
-//  Created by Hagai Weinfeld on 10/8/15.
-//  Copyright (c) 2015 Lightricks Ltd. All rights reserved.
-//
+// Copyright (c) 2015 Lightricks. All rights reserved.
+// Created by Hagai Weinfeld.
 
 #import <Foundation/Foundation.h>
 @import GLKit;
 
-#import "TMHandleDictionary.h"
-#import "TMScalarAttribute.h"
+@class TMScalarUniform;
+@class TMHandleDictionary;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// An openGL program wrapper object.
+/// Object wrapping an OpenGL program.
 @interface TMProgram : NSObject
 
 /// Initialize with attribute names \c attributes, uniform names \c uniforms, \c vertexShaderName
@@ -30,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly, strong, nonatomic) TMHandleDictionary *handlesForUniforms;
 
 /// Binds the given \c TMScalarProgramPArameter with the program.
-- (void)bindScalarParameter:(TMScalarAttribute *)scalarParameter;
+- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform;
 
 /// Calls glUseProgram for the program.
 - (void)useProgram;
