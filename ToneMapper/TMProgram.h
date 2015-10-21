@@ -18,13 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
                   vertexShaderName:(NSString *)vertexShaderName
                 fragmentShaderName:(NSString *)fragmentShaderName;
 
-/// A \c TMHandleDictionary that maps attribute names to \GLuint handles.
-@property (readonly, strong, nonatomic) TMHandleDictionary *handlesForAttributes;
+/// Maps attribute names to \GLuint handles.
+@property (readonly, nonatomic) TMHandleDictionary *handlesForAttributes;
 
-/// A \c TMHandleDictionary that maps uniform names to \GLuint handles.
-@property (readonly, strong, nonatomic) TMHandleDictionary *handlesForUniforms;
+/// Maps uniform names to \GLuint handles.
+@property (readonly, nonatomic) TMHandleDictionary *handlesForUniforms;
 
-/// Binds the given \c TMScalarProgramPArameter with the program.
+/// Binds the given \c scalarUniform to this program.
 - (void)bindScalarUniform:(TMScalarUniform *)scalarUniform;
 
 /// Calls glUseProgram for the program.

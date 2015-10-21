@@ -12,13 +12,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMProgram ()
 
-/// The handle for the program.
+/// Handle to this program.
 @property (nonatomic) GLuint program;
 
-/// A \c TMHandleDictionary that maps attribute names to \GLuint handles.
+/// Maps attribute names to \GLuint handles.
 @property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForAttributes;
 
-/// A \c TMHandleDictionary that maps uniform names to \GLuint handles.
+/// Maps uniform names to \GLuint handles.
 @property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForUniforms;
 
 /// The program's vertex shader.
@@ -31,6 +31,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMProgram
 
+/// Code returns from OpenGL when handle is requested for non existing parameter;
+static const GLuint kOpenGLIncorrectParameterName = -1;
+
 #pragma mark -
 #pragma mark Initialization
 #pragma mark -
@@ -39,15 +42,13 @@ NS_ASSUME_NONNULL_BEGIN
                   vertexShaderName:(NSString *)vertexShaderName
                 fragmentShaderName:(NSString *)fragmentShaderName {
   if (self = [super init]) {
-    
     TMShaderFactory *shaderFactory = [[TMShaderFactory alloc] init];
-    
     self.vertexShader = [shaderFactory shaderForShaderName:vertexShaderName
-                                                        shaderType:GL_VERTEX_SHADER];
+                                                shaderType:GL_VERTEX_SHADER];
     self.fragmentShader = [shaderFactory shaderForShaderName:fragmentShaderName
-                                                          shaderType:GL_FRAGMENT_SHADER];
+                                                  shaderType:GL_FRAGMENT_SHADER];
     self.program = [self programWithVertexShader:self.vertexShader.handle
-                                        fragmentShader:self.fragmentShader.handle];
+                                  fragmentShader:self.fragmentShader.handle];
     self.handlesForAttributes = [self handleDictionaryFromAttributes:attributes
                                                        programHandle:self.program];
     self.handlesForUniforms = [self handleDictionaryFromUniforms:uniforms
@@ -62,18 +63,20 @@ NS_ASSUME_NONNULL_BEGIN
   glAttachShader(program, vertexShader);
   glAttachShader(program, fragmentShader);
   glLinkProgram(program);
-  
-  // Check linkage success.
+  [self checkLinkageSuccessForProgramHandle:program];
+  return program;
+}
+
+- (void)checkLinkageSuccessForProgramHandle:(GLuint)programHandle {
   GLint linkSuccess;
-  glGetProgramiv(program, GL_LINK_STATUS, &linkSuccess);
+  glGetProgramiv(programHandle, GL_LINK_STATUS, &linkSuccess);
   if (linkSuccess == GL_FALSE) {
     GLchar messages[256];
-    glGetProgramInfoLog(program, sizeof(messages), 0, &messages[0]);
+    glGetProgramInfoLog(programHandle, sizeof(messages), 0, &messages[0]);
     NSString *messageString = [NSString stringWithUTF8String:messages];
     NSLog(@"Existing, Program link error: %@", messageString);
     exit(1);
   }
-  return program;
 }
 
 - (TMHandleDictionary *)handleDictionaryFromAttributes:(NSArray *)attributes
@@ -81,7 +84,11 @@ NS_ASSUME_NONNULL_BEGIN
   TMMutableHandleDictionary *mutableHandlesForAttributes = [[TMMutableHandleDictionary alloc] init];
   for (NSString *attribute in attributes) {
     GLuint handle = glGetAttribLocation(program, [attribute UTF8String]);
-    glEnableVertexAttribArray(handle);
+    if (handle == kOpenGLIncorrectParameterName) {
+      NSLog(@"Uniform %@ does not exist.", attribute);
+    } else {
+      glEnableVertexAttribArray(handle);
+    }
     [mutableHandlesForAttributes setHandle:handle forKey:attribute];
   }
   return mutableHandlesForAttributes;
@@ -92,6 +99,9 @@ NS_ASSUME_NONNULL_BEGIN
   TMMutableHandleDictionary *mutableHandlesForUniforms = [[TMMutableHandleDictionary alloc] init];
   for (NSString *uniform in uniforms) {
     GLuint handle = glGetUniformLocation(program, [uniform UTF8String]);
+    if (handle == kOpenGLIncorrectParameterName) {
+      NSLog(@"Uniform %@ does not exist.", uniform);
+    }
     [mutableHandlesForUniforms setHandle:handle forKey:uniform];
   }
   return mutableHandlesForUniforms;
@@ -103,6 +113,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)useProgram {
   glUseProgram(self.program);
+  GLint error;
+  if (glGetError() != 0) {
+    NSLog(@"Error using program: %d", error);
+  }
 }
 
 - (void)bindScalarUniform:(TMScalarUniform *)scalarUniform {
@@ -115,6 +129,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)dealloc {
   glDeleteProgram(self.program);
+  GLint error;
+  if (glGetError() != 0) {
+    NSLog(@"Error deleting program: %d", error);
+  }
 }
 
 

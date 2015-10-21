@@ -7,7 +7,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMQuadTexturedVertices
 
+/// Number of position coordinates.
 static const GLsizei kQuadNumOfPositionCoordinates = 3;
+
+/// Number of texture coordinates.
 static const GLsizei kQuadNumOfTextureCoordinates = 4;
 
 /// A Quad-Vertex memory representation.
@@ -83,7 +86,7 @@ static const GLubyte kQuadIndices[] = {
 }
 
 - (GLvoid *)texturePointer {
-  return (GLvoid *)(sizeof(float) * kQuadNumOfPositionCoordinates);
+  return (GLvoid *)(sizeof(float) * self.numOfPositionCoordinates);
 }
 
 @end
