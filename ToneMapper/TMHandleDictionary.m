@@ -18,9 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Initialization
 #pragma mark -
 
-- (instancetype)init {
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary {
   if (self = [super init]) {
-    self.dictionary = [NSMutableDictionary new];
+    self.dictionary = dictionary;
   }
   return self;
 }

@@ -4,7 +4,7 @@
 #import "TMProgram.h"
 
 #import "TMScalarUniform.h"
-#import "TMMutableHandleDictionary.h"
+#import "TMHandleDictionary.h"
 #import "TMShaderFactory.h"
 #import "TMShader.h"
 
@@ -13,19 +13,30 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TMProgram ()
 
 /// Handle to this program.
-@property (readonly, nonatomic) GLuint program;
+@property (nonatomic) GLuint program;
+
+/// Maps attribute names to \GLuint handles.
+@property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForAttributes;
+
+/// Maps uniform names to \GLuint handles.
+@property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForUniforms;
 
 /// The program's vertex shader.
-@property (readonly, strong, nonatomic) TMShader *vertexShader;
+@property (strong, nonatomic) TMShader *vertexShader;
 
 /// The program's fragment shader.
-@property (readonly, strong, nonatomic) TMShader *fragmentShader;
+@property (strong, nonatomic) TMShader *fragmentShader;
 
 @end
 
 @implementation TMProgram
 
-/// OpenGL return value when a requested handle doesn't exist;
+typedef NS_ENUM(NSInteger, ProgramParameter) {
+  ProgramParameterAttribute,
+  ProgramParameterUniform
+};
+
+/// Code returns from OpenGL when handle is requested for non existing parameter;
 static const GLuint kOpenGLIncorrectParameterName = -1;
 
 #pragma mark -
@@ -37,16 +48,16 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
                 fragmentShaderName:(NSString *)fragmentShaderName {
   if (self = [super init]) {
     TMShaderFactory *shaderFactory = [[TMShaderFactory alloc] init];
-    _vertexShader = [shaderFactory shaderForShaderName:vertexShaderName
-                                            shaderType:GL_VERTEX_SHADER];
-    _fragmentShader = [shaderFactory shaderForShaderName:fragmentShaderName
-                                              shaderType:GL_FRAGMENT_SHADER];
-    _program = [self programWithVertexShader:self.vertexShader.handle
-                              fragmentShader:self.fragmentShader.handle];
-    _handlesForAttributes = [self handleDictionaryFromAttributes:attributes
+    self.vertexShader = [shaderFactory shaderForShaderName:vertexShaderName
+                                                shaderType:GL_VERTEX_SHADER];
+    self.fragmentShader = [shaderFactory shaderForShaderName:fragmentShaderName
+                                                  shaderType:GL_FRAGMENT_SHADER];
+    self.program = [self programWithVertexShader:self.vertexShader.handle
+                                  fragmentShader:self.fragmentShader.handle];
+    self.handlesForAttributes = [self handleDictionaryFromAttributes:attributes
+                                                       programHandle:self.program];
+    self.handlesForUniforms = [self handleDictionaryFromUniforms:uniforms
                                                    programHandle:self.program];
-    _handlesForUniforms = [self handleDictionaryFromUniforms:uniforms
-                                               programHandle:self.program];
   }
   return self;
 }
@@ -75,30 +86,38 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
 
 - (TMHandleDictionary *)handleDictionaryFromAttributes:(NSArray *)attributes
                                          programHandle:(GLuint)program {
-  TMMutableHandleDictionary *mutableHandlesForAttributes = [[TMMutableHandleDictionary alloc] init];
-  for (NSString *attribute in attributes) {
-    GLuint handle = glGetAttribLocation(program, [attribute UTF8String]);
-    if (handle == kOpenGLIncorrectParameterName) {
-      NSLog(@"Uniform %@ does not exist.", attribute);
-    } else {
-      glEnableVertexAttribArray(handle);
-    }
-    [mutableHandlesForAttributes setHandle:handle forKey:attribute];
-  }
-  return mutableHandlesForAttributes;
+  return [self handleDictionaryForParameters:attributes programHandle:program
+                               parameterType:ProgramParameterAttribute];
 }
 
 - (TMHandleDictionary *)handleDictionaryFromUniforms:(NSArray *)uniforms
                                        programHandle:(GLuint)program {
-  TMMutableHandleDictionary *mutableHandlesForUniforms = [[TMMutableHandleDictionary alloc] init];
-  for (NSString *uniform in uniforms) {
-    GLuint handle = glGetUniformLocation(program, [uniform UTF8String]);
-    if (handle == kOpenGLIncorrectParameterName) {
-      NSLog(@"Uniform %@ does not exist.", uniform);
+  return [self handleDictionaryForParameters:uniforms programHandle:program parameterType:ProgramParameterUniform];
+}
+
+- (TMHandleDictionary *)handleDictionaryForParameters:(NSArray *)parameters
+                                        programHandle:(GLuint)program
+                                        parameterType:(ProgramParameter)type {
+  NSMutableDictionary *handlesForParameters = [[NSMutableDictionary alloc] init];
+  for (NSString *parameter in parameters) {
+    GLuint handle;
+    if (type == ProgramParameterUniform) {
+      handle = glGetUniformLocation(program, [parameter UTF8String]);
+      if (handle == kOpenGLIncorrectParameterName) {
+        NSLog(@"Uniform: %@ does not exist.", parameter);
+      }
+    } else {
+      handle = glGetAttribLocation(program, [parameter UTF8String]);
+      if (handle == kOpenGLIncorrectParameterName) {
+        NSLog(@"Attribute: %@ does not exist.", parameter);
+      } else {
+        glEnableVertexAttribArray(handle);
+      }
+
     }
-    [mutableHandlesForUniforms setHandle:handle forKey:uniform];
+    [handlesForParameters setObject:[NSNumber numberWithUnsignedInteger:handle] forKey:parameter];
   }
-  return mutableHandlesForUniforms;
+  return [[TMHandleDictionary alloc] initWithDictionary:handlesForParameters];
 }
 
 #pragma mark -

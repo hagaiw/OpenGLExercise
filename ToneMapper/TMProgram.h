@@ -1,7 +1,7 @@
 // Copyright (c) 2015 Lightricks. All rights reserved.
 // Created by Hagai Weinfeld.
 
-@import GLKit;
+#import <Foundation/Foundation.h>
 
 @class TMScalarUniform;
 @class TMHandleDictionary;
@@ -10,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Object wrapping an OpenGL program.
 @interface TMProgram : NSObject
+
 
 /// Initialize with attribute names \c attributes, uniform names \c uniforms, \c vertexShaderName
 /// and \c fragmentShader name.
