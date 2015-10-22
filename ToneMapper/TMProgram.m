@@ -13,25 +13,19 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TMProgram ()
 
 /// Handle to this program.
-@property (nonatomic) GLuint program;
-
-/// Maps attribute names to \GLuint handles.
-@property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForAttributes;
-
-/// Maps uniform names to \GLuint handles.
-@property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForUniforms;
+@property (readonly, nonatomic) GLuint program;
 
 /// The program's vertex shader.
-@property (strong, nonatomic) TMShader *vertexShader;
+@property (readonly, strong, nonatomic) TMShader *vertexShader;
 
 /// The program's fragment shader.
-@property (strong, nonatomic) TMShader *fragmentShader;
+@property (readonly, strong, nonatomic) TMShader *fragmentShader;
 
 @end
 
 @implementation TMProgram
 
-/// Code returns from OpenGL when handle is requested for non existing parameter;
+/// OpenGL return value when a requested handle doesn't exist;
 static const GLuint kOpenGLIncorrectParameterName = -1;
 
 #pragma mark -
@@ -43,16 +37,16 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
                 fragmentShaderName:(NSString *)fragmentShaderName {
   if (self = [super init]) {
     TMShaderFactory *shaderFactory = [[TMShaderFactory alloc] init];
-    self.vertexShader = [shaderFactory shaderForShaderName:vertexShaderName
-                                                shaderType:GL_VERTEX_SHADER];
-    self.fragmentShader = [shaderFactory shaderForShaderName:fragmentShaderName
-                                                  shaderType:GL_FRAGMENT_SHADER];
-    self.program = [self programWithVertexShader:self.vertexShader.handle
-                                  fragmentShader:self.fragmentShader.handle];
-    self.handlesForAttributes = [self handleDictionaryFromAttributes:attributes
-                                                       programHandle:self.program];
-    self.handlesForUniforms = [self handleDictionaryFromUniforms:uniforms
+    _vertexShader = [shaderFactory shaderForShaderName:vertexShaderName
+                                            shaderType:GL_VERTEX_SHADER];
+    _fragmentShader = [shaderFactory shaderForShaderName:fragmentShaderName
+                                              shaderType:GL_FRAGMENT_SHADER];
+    _program = [self programWithVertexShader:self.vertexShader.handle
+                              fragmentShader:self.fragmentShader.handle];
+    _handlesForAttributes = [self handleDictionaryFromAttributes:attributes
                                                    programHandle:self.program];
+    _handlesForUniforms = [self handleDictionaryFromUniforms:uniforms
+                                               programHandle:self.program];
   }
   return self;
 }
