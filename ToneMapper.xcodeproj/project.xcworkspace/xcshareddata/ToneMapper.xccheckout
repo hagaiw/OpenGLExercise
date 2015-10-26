@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0E2FA333-2457-4F88-A9D7-479FDAB7C0F2</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ToneMapper</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>751597CE8CF1E4F0EB172A6F0E4241CCFE500D4F</key>
+		<string>https://github.com/CodeBaseCamp/OpenGLExercise</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>ToneMapper.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>751597CE8CF1E4F0EB172A6F0E4241CCFE500D4F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/CodeBaseCamp/OpenGLExercise</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>751597CE8CF1E4F0EB172A6F0E4241CCFE500D4F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>751597CE8CF1E4F0EB172A6F0E4241CCFE500D4F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ToneMapper</string>
+		</dict>
+	</array>
+</dict>
+</plist>

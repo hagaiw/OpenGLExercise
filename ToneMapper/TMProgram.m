@@ -15,12 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Handle to this program.
 @property (nonatomic) GLuint program;
 
-/// Maps attribute names to \GLuint handles.
-@property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForAttributes;
-
-/// Maps uniform names to \GLuint handles.
-@property (readwrite, strong, nonatomic) TMHandleDictionary *handlesForUniforms;
-
 /// The program's vertex shader.
 @property (strong, nonatomic) TMShader *vertexShader;
 
@@ -54,9 +48,9 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
                                                   shaderType:GL_FRAGMENT_SHADER];
     self.program = [self programWithVertexShader:self.vertexShader.handle
                                   fragmentShader:self.fragmentShader.handle];
-    self.handlesForAttributes = [self handleDictionaryFromAttributes:attributes
+    _handlesForAttributes = [self handleDictionaryFromAttributes:attributes
                                                        programHandle:self.program];
-    self.handlesForUniforms = [self handleDictionaryFromUniforms:uniforms
+    _handlesForUniforms = [self handleDictionaryFromUniforms:uniforms
                                                    programHandle:self.program];
   }
   return self;
@@ -101,19 +95,23 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
   NSMutableDictionary *handlesForParameters = [[NSMutableDictionary alloc] init];
   for (NSString *parameter in parameters) {
     GLuint handle;
-    if (type == ProgramParameterUniform) {
-      handle = glGetUniformLocation(program, [parameter UTF8String]);
-      if (handle == kOpenGLIncorrectParameterName) {
-        NSLog(@"Uniform: %@ does not exist.", parameter);
-      }
-    } else {
-      handle = glGetAttribLocation(program, [parameter UTF8String]);
-      if (handle == kOpenGLIncorrectParameterName) {
-        NSLog(@"Attribute: %@ does not exist.", parameter);
-      } else {
-        glEnableVertexAttribArray(handle);
-      }
-
+    switch (type) {
+      case ProgramParameterUniform:
+        handle = glGetUniformLocation(program, [parameter UTF8String]);
+        if (handle == kOpenGLIncorrectParameterName) {
+          NSLog(@"Uniform: %@ does not exist.", parameter);
+        }
+        break;
+      case ProgramParameterAttribute:
+        handle = glGetAttribLocation(program, [parameter UTF8String]);
+        if (handle == kOpenGLIncorrectParameterName) {
+          NSLog(@"Attribute: %@ does not exist.", parameter);
+        } else {
+          glEnableVertexAttribArray(handle);
+        }
+        break;
+      default:
+        break;
     }
     [handlesForParameters setObject:[NSNumber numberWithUnsignedInteger:handle] forKey:parameter];
   }
@@ -134,6 +132,10 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
 
 - (void)bindScalarUniform:(TMScalarUniform *)scalarUniform {
   glUniform1f([self.handlesForUniforms handleForKey:scalarUniform.name], scalarUniform.value);
+}
+
+- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform {
+  glUniformMatrix4fv([self.handlesForUniforms handleForKey:uniform], 1, GL_FALSE, matrix.m);
 }
 
 #pragma mark -

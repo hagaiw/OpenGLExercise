@@ -86,7 +86,7 @@ static const GLubyte kQuadIndices[] = {
 }
 
 + (GLvoid *)texturePointer {
-  return (GLvoid *)(sizeof(kQuadVertices[0].Position[0]) * [TMQuadTexturedVertices numOfPositionCoordinates]);
+  return (GLvoid *)(sizeof(kQuadVertices[0].Position[0]) * [[self class] numOfPositionCoordinates]);
 }
 
 @end

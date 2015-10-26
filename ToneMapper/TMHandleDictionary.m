@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
   if (self = [super init]) {
-    self.dictionary = dictionary;
+    self.dictionary = [dictionary copy];
   }
   return self;
 }
