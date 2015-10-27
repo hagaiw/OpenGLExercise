@@ -58,22 +58,18 @@ NS_ASSUME_NONNULL_BEGIN
   TMMatrixUniform *matrixUniform = [[TMMatrixUniform alloc]
                                         initWithMatrix:[self.projectionFactory identityProjection]
                                                uniform:kProjectionUniform];
-  return [self processTexture:texture withMatrixUniforms:@[matrixUniform]];
+  return [self processTexture:texture withUniforms:@[matrixUniform]];
 }
 
 - (TMTexture *)processTexture:(TMTexture *)texture
-           withMatrixUniforms:(NSArray *)matrixUniforms {
+           withUniforms:(NSArray *)uniforms {
   self.frameBuffer = [self frameBufferWithSize:texture.size];
   [[TMTextureDrawer new] drawWithTextureProgram:self.program
                                texturedGeometry:self.geometry
                                     frameBuffer:self.frameBuffer
                                         texture:texture
-                                 matrixUniforms:matrixUniforms];
+                                       uniforms:uniforms];
   return self.frameBuffer.texture;
-}
-
-- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform {
-  [self.program bindMatrix:matrix toUniform:uniform];
 }
 
 - (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {

@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)drawWithTextureProgram:(TMTextureProgram *)program
               texturedGeometry:(TMTexturedGeometry *)texturedGeometry
                    frameBuffer:(id<TMFrameBuffer>)frameBuffer texture:(TMTexture *)texture
-                matrixUniforms:(NSArray *)matrixUniforms;
+                      uniforms:(NSArray *)uniforms;
 
 @end
 

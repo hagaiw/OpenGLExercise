@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
   
   [self.textureDrawer drawWithTextureProgram:self.program texturedGeometry:self.geometry
                                     frameBuffer:self.frameBuffer texture:texture
-                                     matrixUniforms:[matrixUniforms arrayByAddingObject:matrixUniform]];
+                                     uniforms:[matrixUniforms arrayByAddingObject:matrixUniform]];
 }
 
 @end

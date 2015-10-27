@@ -37,14 +37,6 @@
   [self.program useProgram];
 }
 
-- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform {
-  [self.program bindScalarUniform:scalarUniform];
-}
-
-- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform {
-  [self.program bindMatrix:matrix toUniform:uniform];
-}
-
 - (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {
   [self.program bindVector:vector toUniform:uniform];
 }

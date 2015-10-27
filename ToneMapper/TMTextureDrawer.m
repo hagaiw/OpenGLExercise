@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)drawWithTextureProgram:(TMTextureProgram *)program
               texturedGeometry:(TMTexturedGeometry *)texturedGeometry
                    frameBuffer:(id<TMFrameBuffer>)frameBuffer texture:(TMTexture *)texture
-                matrixUniforms:(NSArray *)matrixUniforms {
+                      uniforms:(NSArray *)uniforms {
   [program use];
   [frameBuffer bind];
   [texture bind];
@@ -28,22 +28,18 @@ NS_ASSUME_NONNULL_BEGIN
   
   TMMatrixUniform *projection = [[TMMatrixUniform alloc] initWithMatrix:GLKMatrix4Identity
                                                                 uniform:kProjectionUniform];
-  GLKMatrix4 projectionMatrix = GLKMatrix4Identity;
-  
-  for (TMMatrixUniform *uniform in matrixUniforms) {
+  for (id<TMUniform> uniform in uniforms) {
     if ([uniform.name isEqualToString:kProjectionUniform]) {
-      projectionMatrix = GLKMatrix4Multiply(uniform.matrix, projectionMatrix);
-      projection = [[TMMatrixUniform alloc] initWithMatrix:GLKMatrix4Multiply(uniform.matrix,
+      TMMatrixUniform *matrixUniform = uniform;
+      projection = [[TMMatrixUniform alloc] initWithMatrix:GLKMatrix4Multiply(matrixUniform.matrix,
                                                                               projection.matrix)
                                                    uniform:kProjectionUniform];
     } else {
-//      glUniformMatrix4fv([program.handlesForUniforms handleForKey:uniform.name], 1, 0,
-//                            uniform.matrix.m);
-      [uniform linkToHandle:[program.handlesForUniforms handleForKey:uniform.name]];
+      [uniform linkToProgramWithHandleDictionary:program.handlesForUniforms];
     }
   }
   
-  [projection linkToHandle:[program.handlesForUniforms handleForKey:projection.name]];
+  [projection linkToProgramWithHandleDictionary:program.handlesForUniforms];
 
   
   glViewport(0, 0, frameBuffer.size.width, frameBuffer.size.height);

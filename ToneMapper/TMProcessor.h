@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (TMTexture *)processTexture:(TMTexture *)texture;
 
 /// Process the given \c texture and apply the given \c projection to the result.
-- (TMTexture *)processTexture:(TMTexture *)texture withMatrixUniforms:(NSArray *)matrixUniforms;
+- (TMTexture *)processTexture:(TMTexture *)texture withUniforms:(NSArray *)uniforms;
 
 @end
 

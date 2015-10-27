@@ -34,12 +34,6 @@ static NSString * const kProjectionUniform = @"projection";
 /// Binds the program using \c glUseProgram.
 - (void)use;
 
-/// Binds the given scalar uniform.
-- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform;
-
-/// Binds the given \c matrix to the the given \c uniform.
-- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform;
-
 /// Binds the given \c vector to the given \c uniform;
 - (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform;
 

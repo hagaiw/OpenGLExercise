@@ -130,8 +130,7 @@ static const int kBitsPerPixel = 32;
 
   
   if(self.textureNeedsProcessing) {
-    self.processedTexture = [self.processor processTexture:self.inputTexture
-                                        withMatrixUniforms:@[]];
+    self.processedTexture = [self.processor processTexture:self.inputTexture withUniforms:@[]];
     self.textureNeedsProcessing = false;
   }
   [self.display displayTexture:self.processedTexture position:self.texturePosition
@@ -176,8 +175,7 @@ static const int kBitsPerPixel = 32;
   TMTextureProcessor *processor = [[TMTextureProcessor alloc]
                                           initWithProgram:[self.programFactory globalToneProgram]];
   self.processor = processor;
-  self.processedTexture = [self.processor processTexture:self.inputTexture
-                                      withMatrixUniforms:@[toneMatrixUniform]];
+  self.processedTexture = [self.processor processTexture:self.inputTexture withUniforms:@[toneMatrixUniform]];
   [self.glkView setNeedsDisplay];
 }
 
@@ -190,7 +188,7 @@ static const int kBitsPerPixel = 32;
   [processor bindVector:GLKVector2Make(self.inputTexture.size.width,
                                        self.inputTexture.size.height)
               toUniform:@"textureDimensions"];
-  self.processedTexture = [self.processor processTexture:self.inputTexture withMatrixUniforms:@[]];
+  self.processedTexture = [self.processor processTexture:self.inputTexture withUniforms:@[]];
   [self.glkView setNeedsDisplay];
 }
 

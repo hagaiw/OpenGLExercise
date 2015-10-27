@@ -128,14 +128,6 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
   }
 }
 
-- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform {
-  glUniform1f([self.handlesForUniforms handleForKey:scalarUniform.name], scalarUniform.value);
-}
-
-- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform {
-  glUniformMatrix4fv([self.handlesForUniforms handleForKey:uniform], 1, GL_FALSE, matrix.m);
-}
-
 - (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {
   glUniform2fv([self.handlesForUniforms handleForKey:uniform], 1, vector.v);
 }

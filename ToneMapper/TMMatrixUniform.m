@@ -3,6 +3,8 @@
 
 #import "TMMatrixUniform.h"
 
+#import "TMHandleDictionary.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMMatrixUniform
@@ -25,8 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Linking
 #pragma mark -
 
-- (void)linkToHandle:(GLuint)handle {
-  glUniformMatrix4fv(handle, 1, 0, self.matrix.m);
+- (void)linkToProgramWithHandleDictionary:(TMHandleDictionary *)handleDictionary {
+  glUniformMatrix4fv([handleDictionary handleForKey:self.name], 1, 0, self.matrix.m);
 }
 
 @end

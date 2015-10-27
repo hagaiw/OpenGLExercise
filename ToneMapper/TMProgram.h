@@ -23,12 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Maps uniform names to \GLuint handles.
 @property (readonly, nonatomic) TMHandleDictionary *handlesForUniforms;
 
-/// Binds the given \c scalarUniform to this program.
-- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform;
-
-/// Binds the given \c matrix to the given \c uniform.
-- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform;
-
 /// Binds the given \c vector to the given \c uniform.
 - (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform;
 
