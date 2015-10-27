@@ -5,29 +5,29 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation TMTexture
+@interface TMTexture ()
 
-@synthesize handle = _handle;
-@synthesize target = _target;
-@synthesize size = _size;
+/// Handle of the openGL texture;
+@property (readonly, nonatomic) GLuint handle;
+
+@end
+
+@implementation TMTexture
 
 #pragma mark -
 #pragma mark Initialize
 #pragma mark -
 
 - (instancetype)initWithImage:(UIImage *)image {
-  if (self = [super init]) {
-    glActiveTexture(GL_TEXTURE0);
-    NSError *textureLoaderError;
-    
-    // Read the current openGL error, if exists, to address an issue where \c GLKTextureLoader
-    // returns nil if such error is not read.
-    glGetError();
-    GLKTextureInfo *info = [GLKTextureLoader textureWithCGImage:[image CGImage] options:nil error:&textureLoaderError];
-    self = [self initWithHandle:info.name target:info.target
-                           size:CGSizeMake(info.width, info.height)];
-  }
-  return self;
+  glActiveTexture(GL_TEXTURE0);
+  NSError *textureLoaderError;
+  
+  // Read the current openGL error, if exists, to address an issue where \c GLKTextureLoader
+  // returns nil if such error is not read.
+  glGetError();
+  GLKTextureInfo *info = [GLKTextureLoader textureWithCGImage:[image CGImage] options:nil error:&textureLoaderError];
+  return [self initWithHandle:info.name target:info.target
+                         size:CGSizeMake(info.width, info.height)];
 }
 
 - (instancetype)initWithHandle:(GLuint)handle target:(GLenum)target size:(CGSize)size {

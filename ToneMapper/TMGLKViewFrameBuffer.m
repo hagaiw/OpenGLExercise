@@ -7,11 +7,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMGLKViewFrameBuffer ()
 
-/// The wrapped \c GLKView.
-@property (strong, nonatomic) GLKView *glkView;
+/// Wrapped \c GLKView.
+@property (readonly, strong, nonatomic) GLKView *glkView;
 
-/// The size of the glkView's display in pixels.
-@property (nonatomic) CGSize screenSize;
+/// Size of the glkView's display in pixels.
+@property (readonly, nonatomic) CGSize screenSize;
 
 @end
 
@@ -23,9 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithGLKView:(GLKView *)glkView {
   if (self = [super init]) {
-    self.glkView = glkView;
-    self.screenSize = CGSizeMake(self.glkView.frame.size.width*[UIScreen mainScreen].scale,
-                           self.glkView.frame.size.height*[UIScreen mainScreen].scale);
+    _glkView = glkView;
+    _screenSize = CGSizeMake(self.glkView.frame.size.width*[UIScreen mainScreen].scale,
+                                self.glkView.frame.size.height*[UIScreen mainScreen].scale);
   }
   return self;
 }

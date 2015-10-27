@@ -8,10 +8,16 @@ NS_ASSUME_NONNULL_BEGIN
 /// Represents a \c matrix to be bound to a \uniform variable.
 @interface TMMatrixUniform : NSObject
 
-/// Initializes with \c matrix, \c uniform.
+/// Default initializer should not be called.
+- (instancetype)init NS_UNAVAILABLE;
+
+/// Initializes with \c matrix, uniform.
 - (instancetype)initWithMatrix:(GLKMatrix4)matrix uniform:(NSString *)uniform;
 
+/// Matrix \c uniform should be linked to.
 @property (readonly, nonatomic) GLKMatrix4 matrix;
+
+/// Name of uniform to be used.
 @property (readonly, strong, nonatomic) NSString *uniform;
 
 @end

@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Handle to this program.
 @property (nonatomic) GLuint program;
 
-/// The program's vertex shader.
+/// This program's vertex shader.
 @property (strong, nonatomic) TMShader *vertexShader;
 
-/// The program's fragment shader.
+/// This program's fragment shader.
 @property (strong, nonatomic) TMShader *fragmentShader;
 
 @end

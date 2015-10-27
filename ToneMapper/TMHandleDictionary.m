@@ -7,7 +7,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMHandleDictionary ()
 
-/// The wrapped dictionary used to store the \c TMHandleDictionary's data.
+/// Wrapped dictionary used to store the \c TMHandleDictionary's data.
 @property (strong, nonatomic) NSDictionary *dictionary;
 
 @end

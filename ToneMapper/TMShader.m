@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMShader
 
-/// The expected file extension for the given shader name.
+/// Expected file extension for the given shader name.
 static NSString * const kShaderFileExtension = @"glsl";
 
 /// Error message to present in the case of a compilation error.
@@ -29,7 +29,12 @@ static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@"
 
 /// Taken from: http://www.raywenderlich.com/3664/opengl-tutorial-for-ios-opengl-es-2-0
 - (GLuint)compileShader:(NSString*)shaderName withType:(GLenum)shaderType {
-  
+  NSString* shaderString = [self shaderTextForShader:shaderName];
+  GLuint shaderHandle = [self compileShader:shaderString withType:shaderType];
+  return shaderHandle;
+}
+
+- (NSString *)shaderTextForShader:(NSString *)shaderName {
   NSString* shaderPath = [[NSBundle mainBundle] pathForResource:shaderName
                                                          ofType:kShaderFileExtension];
   NSError* error;
@@ -39,26 +44,34 @@ static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@"
     NSLog(kShaderCompileErrorMessage, error.localizedDescription);
     exit(1);
   }
-  
+  return shaderString;
+}
+
+- (GLuint)compileShaderWithContents:(NSString *)shaderContents type:(GLenum)shaderType {
   GLuint shaderHandle = glCreateShader(shaderType);
-  
-  const char * shaderStringUTF8 = [shaderString UTF8String];
-  int shaderStringLength = (int)[shaderString length];
+  const char * shaderStringUTF8 = [shaderContents UTF8String];
+  int shaderStringLength = (int)[shaderContents length];
   glShaderSource(shaderHandle, 1, &shaderStringUTF8, &shaderStringLength);
-  
   glCompileShader(shaderHandle);
-  
+  [self compilationSuccessForShaderHandle:shaderHandle];
+  return shaderHandle;
+}
+
+- (void)compilationSuccessForShaderHandle:(GLuint)handle {
   GLint compileSuccess;
-  glGetShaderiv(shaderHandle, GL_COMPILE_STATUS, &compileSuccess);
+  glGetShaderiv(handle, GL_COMPILE_STATUS, &compileSuccess);
   if (compileSuccess == GL_FALSE) {
     GLchar messages[256];
-    glGetShaderInfoLog(shaderHandle, sizeof(messages), 0, &messages[0]);
+    glGetShaderInfoLog(handle, sizeof(messages), 0, &messages[0]);
     NSString *messageString = [NSString stringWithUTF8String:messages];
     NSLog(@"%@", messageString);
     exit(1);
   }
-  return shaderHandle;
 }
+
+#pragma mark -
+#pragma mark Destruction
+#pragma mark -
 
 - (void)dealloc {
   glDeleteShader(self.handle);

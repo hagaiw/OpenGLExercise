@@ -8,22 +8,22 @@ NS_ASSUME_NONNULL_BEGIN
 /// Wraps an openGL texture object.
 @interface TMTexture : NSObject
 
+/// Default initializer shouldn't be available.
+- (instancetype)init NS_UNAVAILABLE;
+
 /// Initializes with \c UIImage.
 - (instancetype)initWithImage:(UIImage *)image;
 
-/// Initialize with \c GLuint handle, \c GLenum target, \c CGSize size.
+/// Initializes with \c GLuint handle, \c GLenum target, \c CGSize size.
 - (instancetype)initWithHandle:(GLuint)handle target:(GLenum)target size:(CGSize)size;
 
-/// Bind the texture by calling glBindTexture.
+/// Binds the texture by calling glBindTexture.
 - (void)bind;
 
-/// The handle of the openGL texture;
-@property (readonly, nonatomic) GLuint handle;
-
-/// The binding target of the texture.
+/// Binding target of the texture.
 @property (readonly, nonatomic) GLenum target;
 
-/// The \c CGSize size of the texture.
+/// Size of the texture.
 @property (readonly, nonatomic) CGSize size;
 
 @end

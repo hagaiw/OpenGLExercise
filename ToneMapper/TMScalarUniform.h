@@ -8,7 +8,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// A value class composed of a name-value pair representing a scalar program attribute.
 @interface TMScalarUniform : NSObject
 
-/// Initializes with \c name, \c value.
+/// Default initializer should not be called.
+- (instancetype)init NS_UNAVAILABLE;
+
+/// Initializes with the given \c name indicating the shader attribute this object is associated
+/// with and the given \c value.
 - (instancetype)initWithName:(NSString *)name value:(GLfloat)value;
 
 /// Name of the attribute in the shader.

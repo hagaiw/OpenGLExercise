@@ -7,7 +7,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// A factory class that produces shaders.
+/// Factory class that produces shaders.
 @interface TMShaderFactory : NSObject
 
 /// Compiles and creates a shader with \c shaderName and \c shadertype.

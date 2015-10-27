@@ -19,7 +19,7 @@ typedef struct {
   float TexCoord[2];
 } QuadVertex;
 
-/// The quad vertices coordinates.
+/// Quad vertices coordinates.
 static const QuadVertex kQuadVertices[] = {
   {{1, -1, 0}, {1, 0}},
   {{1, 1, 0}, {1, 1}},
@@ -27,7 +27,7 @@ static const QuadVertex kQuadVertices[] = {
   {{-1, -1, 0}, {0, 0}}
 };
 
-/// The quad vertices indices.
+/// Quad vertices indices.
 static const GLubyte kQuadIndices[] = {
   0, 1, 2,
   2, 3, 0
