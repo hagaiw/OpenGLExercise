@@ -3,10 +3,12 @@
 
 @import GLKit;
 
+#import "TMUniform.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// Represents a \c matrix to be bound to a \uniform variable.
-@interface TMMatrixUniform : NSObject
+@interface TMMatrixUniform : NSObject <TMUniform>
 
 /// Default initializer should not be called.
 - (instancetype)init NS_UNAVAILABLE;
@@ -16,9 +18,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Matrix \c uniform should be linked to.
 @property (readonly, nonatomic) GLKMatrix4 matrix;
-
-/// Name of uniform to be used.
-@property (readonly, strong, nonatomic) NSString *uniform;
 
 @end
 

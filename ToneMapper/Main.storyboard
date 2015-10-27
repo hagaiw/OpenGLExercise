@@ -19,6 +19,9 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kbc-Rj-TqD">
                                 <rect key="frame" x="550" y="562" width="34" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="34" id="rCm-bw-9jD"/>
+                                </constraints>
                                 <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -27,7 +30,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cab-VP-ywi">
-                                <rect key="frame" x="16" y="562" width="47" height="30"/>
+                                <rect key="frame" x="495" y="562" width="47" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="47" id="81c-Qs-9Fl"/>
+                                </constraints>
                                 <state key="normal" title="Switch">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -63,27 +69,41 @@
                                     <action selector="toneAdjustmentSelected:" destination="cAG-KK-2oG" eventType="valueChanged" id="HVP-by-3HB"/>
                                 </connections>
                             </segmentedControl>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cYe-0p-JOf">
+                                <rect key="frame" x="16" y="562" width="471" height="29"/>
+                                <segments>
+                                    <segment title="Medium"/>
+                                    <segment title="Fine"/>
+                                </segments>
+                                <connections>
+                                    <action selector="BilateralEffectSelected:" destination="cAG-KK-2oG" eventType="valueChanged" id="xEG-YM-9fT"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.43529412150382996" blue="0.81176471710205078" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="trailing" secondItem="F0A-8f-5j4" secondAttribute="trailing" id="1Cj-YU-gxd"/>
-                            <constraint firstItem="F0A-8f-5j4" firstAttribute="top" secondItem="ThJ-B9-Ksw" secondAttribute="bottom" constant="8" symbolic="YES" id="2Ji-5T-Czm"/>
-                            <constraint firstItem="cab-VP-ywi" firstAttribute="leading" secondItem="F0A-8f-5j4" secondAttribute="leading" id="88J-nV-QZE"/>
-                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="trailing" secondItem="F0A-8f-5j4" secondAttribute="trailing" id="Fdm-Ji-5hR"/>
-                            <constraint firstItem="fdQ-cS-44y" firstAttribute="top" secondItem="cab-VP-ywi" secondAttribute="bottom" constant="8" symbolic="YES" id="IcA-nV-Jgv"/>
-                            <constraint firstAttribute="trailing" secondItem="kVJ-ej-L5i" secondAttribute="trailing" id="NPu-4r-Yyj"/>
-                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="leading" secondItem="F0A-8f-5j4" secondAttribute="leading" id="WDn-eJ-0c2"/>
-                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="centerX" secondItem="ThJ-B9-Ksw" secondAttribute="centerX" id="WUn-T6-hnS"/>
-                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="top" secondItem="kVJ-ej-L5i" secondAttribute="bottom" constant="8" symbolic="YES" id="Xge-24-QHy"/>
-                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="baseline" secondItem="cab-VP-ywi" secondAttribute="baseline" id="ZYS-e6-DhM"/>
-                            <constraint firstItem="cab-VP-ywi" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leadingMargin" id="eKf-OI-FEL"/>
-                            <constraint firstItem="cab-VP-ywi" firstAttribute="top" secondItem="F0A-8f-5j4" secondAttribute="bottom" constant="8" symbolic="YES" id="ej0-u6-N30"/>
-                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leading" id="h4o-xQ-8aK"/>
-                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="top" secondItem="d42-6J-Z3F" secondAttribute="top" id="unX-Ej-3UD"/>
+                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="top" secondItem="kVJ-ej-L5i" secondAttribute="bottom" constant="8" symbolic="YES" id="1HM-vi-Mf8"/>
+                            <constraint firstItem="F0A-8f-5j4" firstAttribute="leading" secondItem="ThJ-B9-Ksw" secondAttribute="leading" id="2Sl-TU-tcd"/>
+                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="trailing" secondItem="F0A-8f-5j4" secondAttribute="trailing" id="BDO-Y5-UUz"/>
+                            <constraint firstItem="F0A-8f-5j4" firstAttribute="top" secondItem="ThJ-B9-Ksw" secondAttribute="bottom" constant="8" symbolic="YES" id="Kzm-66-NYn"/>
+                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="trailing" secondItem="F0A-8f-5j4" secondAttribute="trailing" id="LzD-Kh-VZN"/>
+                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="centerX" secondItem="ThJ-B9-Ksw" secondAttribute="centerX" id="Ms8-wj-JQx"/>
+                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="baseline" secondItem="cab-VP-ywi" secondAttribute="baseline" id="OFq-5H-3d3"/>
+                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="leading" secondItem="cab-VP-ywi" secondAttribute="trailing" constant="8" symbolic="YES" id="X2p-Mh-pZ6"/>
+                            <constraint firstItem="cab-VP-ywi" firstAttribute="leading" secondItem="cYe-0p-JOf" secondAttribute="trailing" constant="8" symbolic="YES" id="ZJk-gQ-jVE"/>
+                            <constraint firstItem="cYe-0p-JOf" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leadingMargin" id="azc-BL-6YG"/>
+                            <constraint firstItem="cYe-0p-JOf" firstAttribute="top" secondItem="F0A-8f-5j4" secondAttribute="bottom" constant="8" symbolic="YES" id="bad-ES-5BV"/>
+                            <constraint firstAttribute="trailing" secondItem="kVJ-ej-L5i" secondAttribute="trailing" id="eaN-np-Lps"/>
+                            <constraint firstItem="cYe-0p-JOf" firstAttribute="leading" secondItem="F0A-8f-5j4" secondAttribute="leading" id="hb9-oE-yRD"/>
+                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leading" id="kJE-NC-dpc"/>
+                            <constraint firstItem="fdQ-cS-44y" firstAttribute="top" secondItem="cab-VP-ywi" secondAttribute="bottom" constant="8" symbolic="YES" id="kjE-uC-KkM"/>
+                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="top" secondItem="d42-6J-Z3F" secondAttribute="top" id="qxM-JG-Kif"/>
+                            <constraint firstItem="cab-VP-ywi" firstAttribute="top" secondItem="cYe-0p-JOf" secondAttribute="top" id="tgK-nk-p27"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="glview" destination="kVJ-ej-L5i" id="h3F-ly-PcA"/>
+                        <outlet property="toneAdjustmentSlider" destination="F0A-8f-5j4" id="t9N-Cr-bUA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sd9-dY-IK1" userLabel="First Responder" sceneMemberID="firstResponder"/>

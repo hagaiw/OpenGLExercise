@@ -5,7 +5,6 @@
 
 #import "TMScalarUniform.h"
 #import "TMHandleDictionary.h"
-#import "TMShaderFactory.h"
 #import "TMShader.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -41,11 +40,10 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
                   vertexShaderName:(NSString *)vertexShaderName
                 fragmentShaderName:(NSString *)fragmentShaderName {
   if (self = [super init]) {
-    TMShaderFactory *shaderFactory = [[TMShaderFactory alloc] init];
-    self.vertexShader = [shaderFactory shaderForShaderName:vertexShaderName
-                                                shaderType:GL_VERTEX_SHADER];
-    self.fragmentShader = [shaderFactory shaderForShaderName:fragmentShaderName
-                                                  shaderType:GL_FRAGMENT_SHADER];
+    self.vertexShader = [[TMShader alloc] initWithShaderName:vertexShaderName
+                                                  shaderType:GL_VERTEX_SHADER];
+    self.fragmentShader = [[TMShader alloc] initWithShaderName:fragmentShaderName
+                                                    shaderType:GL_FRAGMENT_SHADER];
     self.program = [self programWithVertexShader:self.vertexShader.handle
                                   fragmentShader:self.fragmentShader.handle];
     _handlesForAttributes = [self handleDictionaryFromAttributes:attributes
@@ -136,6 +134,10 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
 
 - (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform {
   glUniformMatrix4fv([self.handlesForUniforms handleForKey:uniform], 1, GL_FALSE, matrix.m);
+}
+
+- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {
+  glUniform2fv([self.handlesForUniforms handleForKey:uniform], 1, vector.v);
 }
 
 #pragma mark -

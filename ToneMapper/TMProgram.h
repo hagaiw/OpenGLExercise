@@ -26,8 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// Binds the given \c scalarUniform to this program.
 - (void)bindScalarUniform:(TMScalarUniform *)scalarUniform;
 
-/// Binds the given \c matrix to the the given \c uniform.
+/// Binds the given \c matrix to the given \c uniform.
 - (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform;
+
+/// Binds the given \c vector to the given \c uniform.
+- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform;
 
 /// Calls glUseProgram for the program.
 - (void)useProgram;

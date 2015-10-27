@@ -45,6 +45,10 @@
   [self.program bindMatrix:matrix toUniform:uniform];
 }
 
+- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {
+  [self.program bindVector:vector toUniform:uniform];
+}
+
 - (TMHandleDictionary *)handlesForUniforms {
   return self.program.handlesForUniforms;
 }

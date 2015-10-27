@@ -66,7 +66,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) BOOL textureNeedsProcessing;
 
 /// The current tone-adjustment mode.
-@property (nonatomic) ToneAdjustment currentToneAdjustment;
+//@property (nonatomic) ToneAdjustment currentToneAdjustment;
 
 @end
 
@@ -127,18 +127,18 @@ static const int kBitsPerPixel = 32;
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
   glClearColor(0.2, 0.0, 0.2, 1.0);
   glClear(GL_COLOR_BUFFER_BIT);
+
+  
   if(self.textureNeedsProcessing) {
-    
-    TMMatrixUniform *matrixUniform = [[TMMatrixUniform alloc]
-                                      initWithMatrix:[self.projectionFactory
-                                                      verticalMirrorProjection]
-                                      uniform:kProjectionUniform];
-    
     self.processedTexture = [self.processor processTexture:self.inputTexture
-                                            withMatrixUniforms:@[matrixUniform]];
+                                        withMatrixUniforms:@[]];
     self.textureNeedsProcessing = false;
   }
-  [self.display displayTexture:self.processedTexture position:self.texturePosition];
+  [self.display displayTexture:self.processedTexture position:self.texturePosition
+                matrixUniforms:@[[[TMMatrixUniform alloc]
+                                  initWithMatrix:[self.projectionFactory
+                                                  verticalMirrorProjection]
+                                  uniform:kProjectionUniform]]];
 }
 
 #pragma mark -
@@ -171,18 +171,26 @@ static const int kBitsPerPixel = 32;
   [self.glkView setNeedsDisplay];
 }
 
-- (void)sliderMovedTo:(GLfloat)sliderValue { // TODO edit
-  TMToneTextureProcessor *processor = [[TMToneTextureProcessor alloc] initWithProgram:[self.programFactory brightnessProgram]];
-  [processor value:sliderValue forToneAdjustment:self.currentToneAdjustment];
-  
+- (void)setToneMatrix:(GLKMatrix4)toneMatrix {
+  TMMatrixUniform *toneMatrixUniform = [[TMMatrixUniform alloc] initWithMatrix:toneMatrix uniform:@"toneAdjustment"];
+  TMTextureProcessor *processor = [[TMTextureProcessor alloc]
+                                          initWithProgram:[self.programFactory globalToneProgram]];
   self.processor = processor;
-  
-  TMMatrixUniform *matrixUniform = [[TMMatrixUniform alloc]
-                                        initWithMatrix:[self.projectionFactory
-                                                    verticalMirrorProjection]
-                                               uniform:kProjectionUniform];
   self.processedTexture = [self.processor processTexture:self.inputTexture
-                                      withMatrixUniforms:@[matrixUniform]];
+                                      withMatrixUniforms:@[toneMatrixUniform]];
+  [self.glkView setNeedsDisplay];
+}
+
+- (void)useBilateralFilter {
+  TMTextureProgram *program = [self.programFactory bilateralFilterProgram];
+  TMTextureProcessor *processor = [[TMTextureProcessor alloc]
+                                   initWithProgram:program];
+  [program use];
+  self.processor = processor;
+  [processor bindVector:GLKVector2Make(self.inputTexture.size.width,
+                                       self.inputTexture.size.height)
+              toUniform:@"textureDimensions"];
+  self.processedTexture = [self.processor processTexture:self.inputTexture withMatrixUniforms:@[]];
   [self.glkView setNeedsDisplay];
 }
 
@@ -226,24 +234,6 @@ static const int kBitsPerPixel = 32;
   int maxTextureSize;
   glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
   return (NSUInteger)maxTextureSize;
-}
-
-- (void)currentToneAdjustmentByTitle:(NSString *)title {
-  if ([title isEqualToString:@"Brightness"]) {
-    self.currentToneAdjustment = ToneAdjustmentBrightness;
-  }
-  else if ([title isEqualToString:@"Contrast"]) {
-    self.currentToneAdjustment = ToneAdjustmentContrast;
-  }
-  else if ([title isEqualToString:@"Saturation"]) {
-    self.currentToneAdjustment = ToneAdjustmentSaturation;
-  }
-  else if ([title isEqualToString:@"Tint"]) {
-    self.currentToneAdjustment = ToneAdjustmentTint;
-  }
-  else if ([title isEqualToString:@"Temperature"]) {
-    self.currentToneAdjustment = ToneAdjustmentTemperature;
-  }
 }
 
 @end

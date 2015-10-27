@@ -40,6 +40,9 @@ static NSString * const kProjectionUniform = @"projection";
 /// Binds the given \c matrix to the the given \c uniform.
 - (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform;
 
+/// Binds the given \c vector to the given \c uniform;
+- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform;
+
 /// Maps uniform names to handles.
 - (TMHandleDictionary *)handlesForUniforms;
 

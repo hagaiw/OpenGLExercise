@@ -40,18 +40,13 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Initialize
 #pragma mark -
 
-- (instancetype)init {
+- (instancetype)initWithProgram:(TMTextureProgram *)program {
   if (self = [super init]) {
     self.projectionFactory = [TMProjectionFactory new];
     self.geometryFactory = [TMGeometryFactory new];
+    self.program = program;
+    self.geometry = [self.geometryFactory quadGeometry];
   }
-  return self;
-}
-
-- (instancetype)initWithProgram:(TMTextureProgram *)program {
-  self = [self init];
-  self.program = program;
-  self.geometry = [self.geometryFactory quadGeometry];
   return self;
 }
 
@@ -63,8 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
   TMMatrixUniform *matrixUniform = [[TMMatrixUniform alloc]
                                         initWithMatrix:[self.projectionFactory identityProjection]
                                                uniform:kProjectionUniform];
-  return [self processTexture:texture
-               withMatrixUniforms:@[matrixUniform]];
+  return [self processTexture:texture withMatrixUniforms:@[matrixUniform]];
 }
 
 - (TMTexture *)processTexture:(TMTexture *)texture
@@ -80,6 +74,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform {
   [self.program bindMatrix:matrix toUniform:uniform];
+}
+
+- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {
+  [self.program bindVector:vector toUniform:uniform];
 }
 
 #pragma mark -

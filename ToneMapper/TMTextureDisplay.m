@@ -58,8 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Texture Displaying
 #pragma mark -
 
-- (void)displayTexture:(TMTexture *)texture
-           position:(TMScaledPosition *)displayData {
+- (void)displayTexture:(TMTexture *)texture position:(TMScaledPosition *)displayData
+        matrixUniforms:(NSArray *)matrixUniforms{
   
   GLKMatrix4 aspectFixProjection = [self.projectionFactory projectionFitSize:texture.size
                                                                       inSize:self.frameBuffer.size];
@@ -76,7 +76,7 @@ NS_ASSUME_NONNULL_BEGIN
   
   [self.textureDrawer drawWithTextureProgram:self.program texturedGeometry:self.geometry
                                     frameBuffer:self.frameBuffer texture:texture
-                                     matrixUniforms:@[matrixUniform]];
+                                     matrixUniforms:[matrixUniforms arrayByAddingObject:matrixUniform]];
 }
 
 @end

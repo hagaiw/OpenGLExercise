@@ -30,10 +30,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)maxTextureSize;
 
 /// TODO: document
-- (void)sliderMovedTo:(GLfloat)sliderValue;
+- (void)setToneMatrix:(GLKMatrix4)toneMatrix;
 
-/// Sets the current tone adjustment by the given adjustment \c title.
-- (void)currentToneAdjustmentByTitle:(NSString *)title;
+/// TODO: document
+- (void)useBilateralFilter;
 
 @end
 

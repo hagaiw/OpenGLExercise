@@ -3,6 +3,7 @@
 
 #import "TMViewController.h"
 #import "TMGLViewController.h"
+#import "TMToneAdjustmentGenerator.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -13,6 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The view to be used by \c openGLVC.
 @property (weak, nonatomic) IBOutlet UIView *glview;
+
+/// Holds the values of the current tone adjustments.
+@property (strong, nonatomic) TMToneAdjustmentGenerator *toneAdjustmentGenerator;
+
+/// Tone adjustment that the slider affects.
+@property (nonatomic) ToneAdjustment currentToneAdjustment;
+
+/// Slider controlling the current adjustment.
+@property (weak, nonatomic) IBOutlet UISlider *toneAdjustmentSlider;
 
 @end
 
@@ -75,15 +85,60 @@ static const float kDefaultImageScale = 1.0;
   mediaUI.allowsEditing = NO;
   mediaUI.delegate = self;
   [self presentViewController:mediaUI animated:YES completion:nil];
+  self.toneAdjustmentGenerator = [[TMToneAdjustmentGenerator alloc] init];
+  self.toneAdjustmentSlider.value = 0.5;
+  [self.openGLVC setToneMatrix:[self.toneAdjustmentGenerator toneMatrix]];
 }
 
 - (IBAction)sliderMoved:(UISlider *)sender {
-  [self.openGLVC sliderMovedTo:(sender.value)];
+  switch (self.currentToneAdjustment) {
+    case ToneAdjustmentBrightness:
+      self.toneAdjustmentGenerator.brightnessValue = sender.value;
+      break;
+    case ToneAdjustmentContrast:
+      self.toneAdjustmentGenerator.contrastValue = sender.value;
+      break;
+    case ToneAdjustmentSaturation:
+      self.toneAdjustmentGenerator.saturationValue = sender.value;
+      break;
+    case ToneAdjustmentTint:
+      self.toneAdjustmentGenerator.tintValue = sender.value;
+      break;
+    case ToneAdjustmentTemperature:
+      self.toneAdjustmentGenerator.temperatureValue = sender.value;
+      break;
+    default:
+      break;
+  }
+  [self.openGLVC setToneMatrix:[self.toneAdjustmentGenerator toneMatrix]];
 }
 
 - (IBAction)toneAdjustmentSelected:(UISegmentedControl *)sender {
-  [self.openGLVC currentToneAdjustmentByTitle:
-      [sender titleForSegmentAtIndex:sender.selectedSegmentIndex]];
+  NSString *title =  ([sender titleForSegmentAtIndex:sender.selectedSegmentIndex]);
+  if ([title isEqualToString:@"Brightness"]) {
+    self.currentToneAdjustment = ToneAdjustmentBrightness;
+    self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.brightnessValue;
+  }
+  else if ([title isEqualToString:@"Contrast"]) {
+    self.currentToneAdjustment = ToneAdjustmentContrast;
+    self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.contrastValue;
+  }
+  else if ([title isEqualToString:@"Saturation"]) {
+    self.currentToneAdjustment = ToneAdjustmentSaturation;
+    self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.saturationValue;
+  }
+  else if ([title isEqualToString:@"Tint"]) {
+    self.currentToneAdjustment = ToneAdjustmentTint;
+    self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.tintValue;
+  }
+  else if ([title isEqualToString:@"Temperature"]) {
+    self.currentToneAdjustment = ToneAdjustmentTemperature;
+    self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.temperatureValue;
+  }
+}
+
+- (IBAction)BilateralEffectSelected:(UISegmentedControl *)sender {
+  [self.openGLVC useBilateralFilter];
 }
 
 #pragma mark -
@@ -117,6 +172,17 @@ static const float kDefaultImageScale = 1.0;
   [self dismissViewControllerAnimated:YES completion:nil];
   UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
   [self.openGLVC loadTextureFromImage:[self prepareImage:image]];
+}
+
+#pragma mark -
+#pragma mark Properties
+#pragma mark -
+
+- (TMToneAdjustmentGenerator *)toneAdjustmentGenerator {
+  if (!_toneAdjustmentGenerator){
+    _toneAdjustmentGenerator = [[TMToneAdjustmentGenerator alloc] init];
+  }
+  return _toneAdjustmentGenerator;
 }
 
 @end

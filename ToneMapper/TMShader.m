@@ -30,15 +30,15 @@ static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@"
 /// Taken from: http://www.raywenderlich.com/3664/opengl-tutorial-for-ios-opengl-es-2-0
 - (GLuint)compileShader:(NSString*)shaderName withType:(GLenum)shaderType {
   NSString* shaderString = [self shaderTextForShader:shaderName];
-  GLuint shaderHandle = [self compileShader:shaderString withType:shaderType];
+  GLuint shaderHandle = [self compileShaderWithContents:shaderString type:shaderType];
   return shaderHandle;
 }
 
 - (NSString *)shaderTextForShader:(NSString *)shaderName {
   NSString* shaderPath = [[NSBundle mainBundle] pathForResource:shaderName
                                                          ofType:kShaderFileExtension];
-  NSError* error;
-  NSString* shaderString = [NSString stringWithContentsOfFile:shaderPath
+  NSError *error;
+  NSString *shaderString = [NSString stringWithContentsOfFile:shaderPath
                                                      encoding:NSUTF8StringEncoding error:&error];
   if (!shaderString) {
     NSLog(kShaderCompileErrorMessage, error.localizedDescription);

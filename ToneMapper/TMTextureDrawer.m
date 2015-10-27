@@ -26,14 +26,25 @@ NS_ASSUME_NONNULL_BEGIN
   
   glUniform1i(program.textureUniform, 0);
   
-  
+  TMMatrixUniform *projection = [[TMMatrixUniform alloc] initWithMatrix:GLKMatrix4Identity
+                                                                uniform:kProjectionUniform];
+  GLKMatrix4 projectionMatrix = GLKMatrix4Identity;
   
   for (TMMatrixUniform *uniform in matrixUniforms) {
-    glUniformMatrix4fv([program.handlesForUniforms handleForKey:uniform.uniform], 1, 0,
-                          uniform.matrix.m);
+    if ([uniform.name isEqualToString:kProjectionUniform]) {
+      projectionMatrix = GLKMatrix4Multiply(uniform.matrix, projectionMatrix);
+      projection = [[TMMatrixUniform alloc] initWithMatrix:GLKMatrix4Multiply(uniform.matrix,
+                                                                              projection.matrix)
+                                                   uniform:kProjectionUniform];
+    } else {
+//      glUniformMatrix4fv([program.handlesForUniforms handleForKey:uniform.name], 1, 0,
+//                            uniform.matrix.m);
+      [uniform linkToHandle:[program.handlesForUniforms handleForKey:uniform.name]];
+    }
   }
   
-  
+  [projection linkToHandle:[program.handlesForUniforms handleForKey:projection.name]];
+
   
   glViewport(0, 0, frameBuffer.size.width, frameBuffer.size.height);
   glDrawElements(GL_TRIANGLES, [texturedGeometry numberOfIndices], GL_UNSIGNED_BYTE, 0);
