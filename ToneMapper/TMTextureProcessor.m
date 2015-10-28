@@ -72,10 +72,6 @@ NS_ASSUME_NONNULL_BEGIN
   return self.frameBuffer.texture;
 }
 
-- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {
-  [self.program bindVector:vector toUniform:uniform];
-}
-
 #pragma mark -
 #pragma mark Frame Buffer Handling
 #pragma mark -

@@ -20,12 +20,16 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 
 - (instancetype)initWithSize:(CGSize)size {
+  return [self initWithSize:size textureIndex:0];
+}
+
+- (instancetype)initWithSize:(CGSize)size textureIndex:(GLuint)textureIndex {
   if (self = [super init]) {
     glGenFramebuffers(1, &_handle);
     GLuint bufferTextureHandle;
     glGenTextures(1, &bufferTextureHandle);
     _texture = [[TMTexture alloc] initWithHandle:bufferTextureHandle target:GL_TEXTURE_2D
-                                                size:size];
+                                                size:size index:textureIndex];
     [self setupFrameBufferWithTextureHandle:bufferTextureHandle];
   }
   return self;

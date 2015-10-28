@@ -3,16 +3,23 @@
 
 #import <Foundation/Foundation.h>
 
-@class TMTextureProcessor;
+@protocol TMProcessor;
 @class TMTextureProgram;
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// A factory class that produces \c TMTextureProcessor objects.
+/// Factory class that produces \c TMTextureProcessor objects.
 @interface TMTextureProcessorFactory : NSObject
 
-/// Returns a \c TMTextureProcessor with the given \c TMTexturePRogram.
-- (TMTextureProcessor *)processorWithProgram:(TMTextureProgram *)program;
+/// \c TMProcessor with the given \c program.
+- (id<TMProcessor>)processorWithProgram:(TMTextureProgram *)program;
+
+/// \c TMProcessor with the given \c programs to be applied in-order.
+- (id<TMProcessor>)processorWithPrograms:(NSArray *)programs;
+
+/// \c TMProcessor that applies the given \c processor \c numberOfPasses times.
+- (id<TMProcessor>)multipassProcessorFromProcessor:(id<TMProcessor>)processor
+                                    numberOfPasses:(NSUInteger)numberOfPasses;
 
 @end
 

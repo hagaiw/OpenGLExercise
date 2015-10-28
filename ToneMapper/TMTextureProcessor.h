@@ -17,9 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initialize with \c TMTextureProgram to be used whenprocessing.
 - (instancetype)initWithProgram:(TMTextureProgram *)program NS_DESIGNATED_INITIALIZER;
 
-/// Binds the given \c vector to the given \c uniform.
-- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform;
-
 @end
 
 NS_ASSUME_NONNULL_END

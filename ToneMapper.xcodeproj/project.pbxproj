@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA4921681BE11DD900134D7F /* TMMixingFragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = FA4921671BE11DD900134D7F /* TMMixingFragmentShader.glsl */; };
 		FA5349C01BD7E74900BA4AAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FA5349BF1BD7E74900BA4AAC /* main.m */; };
 		FA5349CB1BD7E74900BA4AAC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA5349CA1BD7E74900BA4AAC /* Images.xcassets */; };
 		FA5349CE1BD7E74900BA4AAC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA5349CC1BD7E74900BA4AAC /* LaunchScreen.xib */; };
@@ -40,8 +41,12 @@
 		FA534A6D1BD8F77900BA4AAC /* TMToneTextureProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FA534A6C1BD8F77900BA4AAC /* TMToneTextureProcessor.m */; };
 		FA534A741BD92B2600BA4AAC /* TMMatrixUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = FA534A731BD92B2600BA4AAC /* TMMatrixUniform.m */; };
 		FAECDE151BDF99FF004ED451 /* TMToneAdjustmentGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = FAECDE141BDF99FF004ED451 /* TMToneAdjustmentGenerator.m */; };
-		FAECDE181BDFC06C004ED451 /* TMBilateralVertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = FAECDE161BDFC06C004ED451 /* TMBilateralVertexShader.glsl */; };
+		FAECDE181BDFC06C004ED451 /* TMBilateralHorizontalVertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = FAECDE161BDFC06C004ED451 /* TMBilateralHorizontalVertexShader.glsl */; };
 		FAECDE191BDFC06C004ED451 /* TMBilateralFragmentShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = FAECDE171BDFC06C004ED451 /* TMBilateralFragmentShader.glsl */; };
+		FAECDE1D1BE0C072004ED451 /* TMVector2DUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = FAECDE1C1BE0C072004ED451 /* TMVector2DUniform.m */; };
+		FAECDE201BE0C6B5004ED451 /* TMConcatProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = FAECDE1F1BE0C6B5004ED451 /* TMConcatProcessor.m */; };
+		FAECDE221BE0CD6D004ED451 /* TMBilateralVerticalVertexShader.glsl in Resources */ = {isa = PBXBuildFile; fileRef = FAECDE211BE0CD6D004ED451 /* TMBilateralVerticalVertexShader.glsl */; };
+		FAECDE251BE11650004ED451 /* TMTextureUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = FAECDE241BE11650004ED451 /* TMTextureUniform.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA4921671BE11DD900134D7F /* TMMixingFragmentShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TMMixingFragmentShader.glsl; sourceTree = "<group>"; };
 		FA5349BA1BD7E74900BA4AAC /* ToneMapper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToneMapper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA5349BE1BD7E74900BA4AAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA5349BF1BD7E74900BA4AAC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -123,9 +129,16 @@
 		FA534A731BD92B2600BA4AAC /* TMMatrixUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMMatrixUniform.m; sourceTree = "<group>"; };
 		FAECDE131BDF99FF004ED451 /* TMToneAdjustmentGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMToneAdjustmentGenerator.h; sourceTree = "<group>"; };
 		FAECDE141BDF99FF004ED451 /* TMToneAdjustmentGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMToneAdjustmentGenerator.m; sourceTree = "<group>"; };
-		FAECDE161BDFC06C004ED451 /* TMBilateralVertexShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TMBilateralVertexShader.glsl; sourceTree = "<group>"; };
+		FAECDE161BDFC06C004ED451 /* TMBilateralHorizontalVertexShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TMBilateralHorizontalVertexShader.glsl; sourceTree = "<group>"; };
 		FAECDE171BDFC06C004ED451 /* TMBilateralFragmentShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TMBilateralFragmentShader.glsl; sourceTree = "<group>"; };
 		FAECDE1A1BDFE363004ED451 /* TMUniform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMUniform.h; sourceTree = "<group>"; };
+		FAECDE1B1BE0C072004ED451 /* TMVector2DUniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMVector2DUniform.h; sourceTree = "<group>"; };
+		FAECDE1C1BE0C072004ED451 /* TMVector2DUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMVector2DUniform.m; sourceTree = "<group>"; };
+		FAECDE1E1BE0C6B5004ED451 /* TMConcatProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMConcatProcessor.h; sourceTree = "<group>"; };
+		FAECDE1F1BE0C6B5004ED451 /* TMConcatProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMConcatProcessor.m; sourceTree = "<group>"; };
+		FAECDE211BE0CD6D004ED451 /* TMBilateralVerticalVertexShader.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TMBilateralVerticalVertexShader.glsl; sourceTree = "<group>"; };
+		FAECDE231BE11650004ED451 /* TMTextureUniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMTextureUniform.h; sourceTree = "<group>"; };
+		FAECDE241BE11650004ED451 /* TMTextureUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMTextureUniform.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +159,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA4921661BE11AA900134D7F /* Uniforms */ = {
+			isa = PBXGroup;
+			children = (
+				FAECDE1A1BDFE363004ED451 /* TMUniform.h */,
+				FAECDE1B1BE0C072004ED451 /* TMVector2DUniform.h */,
+				FAECDE1C1BE0C072004ED451 /* TMVector2DUniform.m */,
+				FA534A221BD7E88F00BA4AAC /* TMScalarUniform.h */,
+				FA534A231BD7E88F00BA4AAC /* TMScalarUniform.m */,
+				FA534A721BD92B2600BA4AAC /* TMMatrixUniform.h */,
+				FA534A731BD92B2600BA4AAC /* TMMatrixUniform.m */,
+				FAECDE231BE11650004ED451 /* TMTextureUniform.h */,
+				FAECDE241BE11650004ED451 /* TMTextureUniform.m */,
+			);
+			name = Uniforms;
+			sourceTree = "<group>";
+		};
 		FA5349B11BD7E74900BA4AAC = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +203,7 @@
 				FA534A601BD7E9F300BA4AAC /* Geometry */,
 				FA534A5F1BD7E9EC00BA4AAC /* Shaders */,
 				FA534A5E1BD7E9D800BA4AAC /* Frame Buffers */,
+				FA4921661BE11AA900134D7F /* Uniforms */,
 				FA534A5D1BD7E9D100BA4AAC /* Programs */,
 				FA534A691BD7ECA000BA4AAC /* Main.storyboard */,
 				FA5349CA1BD7E74900BA4AAC /* Images.xcassets */,
@@ -214,18 +244,13 @@
 		FA534A5D1BD7E9D100BA4AAC /* Programs */ = {
 			isa = PBXGroup;
 			children = (
+				FA534A1A1BD7E88F00BA4AAC /* TMProgramFactory.h */,
+				FA534A1B1BD7E88F00BA4AAC /* TMProgramFactory.m */,
 				FA534A171BD7E88F00BA4AAC /* TMProgram_Testing.h */,
 				FA534A181BD7E88F00BA4AAC /* TMProgram.h */,
 				FA534A191BD7E88F00BA4AAC /* TMProgram.m */,
-				FAECDE1A1BDFE363004ED451 /* TMUniform.h */,
 				FA534A381BD7E88F00BA4AAC /* TMTextureProgram.h */,
 				FA534A391BD7E88F00BA4AAC /* TMTextureProgram.m */,
-				FA534A1A1BD7E88F00BA4AAC /* TMProgramFactory.h */,
-				FA534A1B1BD7E88F00BA4AAC /* TMProgramFactory.m */,
-				FA534A221BD7E88F00BA4AAC /* TMScalarUniform.h */,
-				FA534A231BD7E88F00BA4AAC /* TMScalarUniform.m */,
-				FA534A721BD92B2600BA4AAC /* TMMatrixUniform.h */,
-				FA534A731BD92B2600BA4AAC /* TMMatrixUniform.m */,
 			);
 			name = Programs;
 			sourceTree = "<group>";
@@ -251,8 +276,10 @@
 				FA534A041BD7E88F00BA4AAC /* toneAdjustmentFragmentShader.glsl */,
 				FA534A061BD7E88F00BA4AAC /* passThroughFragmentShader.glsl */,
 				FA534A071BD7E88F00BA4AAC /* passThroughWithProjectionVertexShader.glsl */,
-				FAECDE161BDFC06C004ED451 /* TMBilateralVertexShader.glsl */,
+				FAECDE161BDFC06C004ED451 /* TMBilateralHorizontalVertexShader.glsl */,
+				FAECDE211BE0CD6D004ED451 /* TMBilateralVerticalVertexShader.glsl */,
 				FAECDE171BDFC06C004ED451 /* TMBilateralFragmentShader.glsl */,
+				FA4921671BE11DD900134D7F /* TMMixingFragmentShader.glsl */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -303,6 +330,8 @@
 				FA534A6C1BD8F77900BA4AAC /* TMToneTextureProcessor.m */,
 				FAECDE131BDF99FF004ED451 /* TMToneAdjustmentGenerator.h */,
 				FAECDE141BDF99FF004ED451 /* TMToneAdjustmentGenerator.m */,
+				FAECDE1E1BE0C6B5004ED451 /* TMConcatProcessor.h */,
+				FAECDE1F1BE0C6B5004ED451 /* TMConcatProcessor.m */,
 			);
 			name = Processors;
 			sourceTree = "<group>";
@@ -407,6 +436,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAECDE221BE0CD6D004ED451 /* TMBilateralVerticalVertexShader.glsl in Resources */,
 				FAECDE191BDFC06C004ED451 /* TMBilateralFragmentShader.glsl in Resources */,
 				FA534A6A1BD7ECA000BA4AAC /* Main.storyboard in Resources */,
 				FA534A431BD7E88F00BA4AAC /* passThroughWithProjectionVertexShader.glsl in Resources */,
@@ -414,7 +444,8 @@
 				FA5349CB1BD7E74900BA4AAC /* Images.xcassets in Resources */,
 				FA534A421BD7E88F00BA4AAC /* passThroughFragmentShader.glsl in Resources */,
 				FA534A401BD7E88F00BA4AAC /* toneAdjustmentFragmentShader.glsl in Resources */,
-				FAECDE181BDFC06C004ED451 /* TMBilateralVertexShader.glsl in Resources */,
+				FAECDE181BDFC06C004ED451 /* TMBilateralHorizontalVertexShader.glsl in Resources */,
+				FA4921681BE11DD900134D7F /* TMMixingFragmentShader.glsl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,9 +470,11 @@
 				FA534A511BD7E88F00BA4AAC /* TMShader.m in Sources */,
 				FA5349FF1BD7E85600BA4AAC /* TMQuadTexturedVertices.m in Sources */,
 				FA534A471BD7E88F00BA4AAC /* TMHandleDictionary.m in Sources */,
+				FAECDE201BE0C6B5004ED451 /* TMConcatProcessor.m in Sources */,
 				FA534A6D1BD8F77900BA4AAC /* TMToneTextureProcessor.m in Sources */,
 				FA534A591BD7E88F00BA4AAC /* TMTextureProcessorFactory.m in Sources */,
 				FA534A541BD7E88F00BA4AAC /* TMTexturedGeometry.m in Sources */,
+				FAECDE251BE11650004ED451 /* TMTextureUniform.m in Sources */,
 				FA534A4A1BD7E88F00BA4AAC /* TMPositionFactory.m in Sources */,
 				FAECDE151BDF99FF004ED451 /* TMToneAdjustmentGenerator.m in Sources */,
 				FA534A581BD7E88F00BA4AAC /* TMTextureProcessor.m in Sources */,
@@ -456,6 +489,7 @@
 				FA534A5A1BD7E88F00BA4AAC /* TMTextureProgram.m in Sources */,
 				FA534A571BD7E88F00BA4AAC /* TMTextureFrameBuffer.m in Sources */,
 				FA534A5B1BD7E88F00BA4AAC /* TMViewController.m in Sources */,
+				FAECDE1D1BE0C072004ED451 /* TMVector2DUniform.m in Sources */,
 				FA534A741BD92B2600BA4AAC /* TMMatrixUniform.m in Sources */,
 				FA534A501BD7E88F00BA4AAC /* TMScalarUniform.m in Sources */,
 			);

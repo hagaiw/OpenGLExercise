@@ -18,13 +18,11 @@ NS_ASSUME_NONNULL_BEGIN
                       uniforms:(NSArray *)uniforms {
   [program use];
   [frameBuffer bind];
-  [texture bind];
-  [texturedGeometry bind];
   
+  [texture bindAndlinkToHandle:program.textureUniform];
+  [texturedGeometry bind];
   [texturedGeometry linkPositionArrayToAttribute:program.positionAttribute];
   [texturedGeometry linkTextureArrayToAttribute:program.textureCoordAttribute];
-  
-  glUniform1i(program.textureUniform, 0);
   
   TMMatrixUniform *projection = [[TMMatrixUniform alloc] initWithMatrix:GLKMatrix4Identity
                                                                 uniform:kProjectionUniform];

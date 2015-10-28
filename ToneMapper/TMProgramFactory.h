@@ -17,8 +17,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// Program that allows adjusting of brightness.
 - (TMTextureProgram *)globalToneProgram;
 
-/// Bilateral filter applying program.
-- (TMTextureProgram *)bilateralFilterProgram;
+/// Bilateral horizontal filter program.
+- (TMTextureProgram *)bilateralHorizontalFilterProgram;
+
+/// Bilateral vertical filter program.
+- (TMTextureProgram *)bilateralVerticalFilterProgram;
+
+/// Texture Mixing Program.
+- (TMTextureProgram *)textureMixingProgram;
 
 @end
 

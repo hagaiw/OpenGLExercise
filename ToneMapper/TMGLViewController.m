@@ -17,6 +17,8 @@
 #import "TMProjectionFactory.h"
 #import "TMToneTextureProcessor.h"
 #import "TMMatrixUniform.h"
+#import "TMVector2DUniform.h"
+#import "TMTextureUniform.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -33,6 +35,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// The \c TMTexture resulting from applying the processor to \c inputTexture.
 @property (strong, nonatomic) TMTexture *processedTexture;
+
+/// Input texture after applying a bilateral filter with a large kernel to it.
+@property (strong, nonatomic) TMTexture *bilateralFilteredTextureLarge;
+
+/// Input texture after applying a bilateral filter with a small kernel to it.
+@property (strong, nonatomic) TMTexture *bilateralFilteredTextureSmall;
 
 /// The position of the currently displayed \c TMTexture on screen.
 @property (strong, nonatomic) TMScaledPosition *texturePosition;
@@ -146,6 +154,10 @@ static const int kBitsPerPixel = 32;
 
 - (void)loadTextureFromImage:(UIImage *)image {
   self.inputTexture = [[TMTexture alloc] initWithImage:image];
+  self.bilateralFilteredTextureLarge = [self texture:self.inputTexture
+                                            AfterBilateralWithNumberOfPasses:5];
+  self.bilateralFilteredTextureSmall = [self texture:self.inputTexture
+                                            AfterBilateralWithNumberOfPasses:2];
   self.textureNeedsProcessing = true;
   [self.glkView setNeedsDisplay];
 }
@@ -171,25 +183,47 @@ static const int kBitsPerPixel = 32;
 }
 
 - (void)setToneMatrix:(GLKMatrix4)toneMatrix {
-  TMMatrixUniform *toneMatrixUniform = [[TMMatrixUniform alloc] initWithMatrix:toneMatrix uniform:@"toneAdjustment"];
+  TMMatrixUniform *toneMatrixUniform = [[TMMatrixUniform alloc] initWithMatrix:toneMatrix
+                                                                       uniform:@"toneAdjustment"];
   TMTextureProcessor *processor = [[TMTextureProcessor alloc]
                                           initWithProgram:[self.programFactory globalToneProgram]];
   self.processor = processor;
-  self.processedTexture = [self.processor processTexture:self.inputTexture withUniforms:@[toneMatrixUniform]];
+  self.processedTexture = [self.processor processTexture:self.inputTexture
+                                            withUniforms:@[toneMatrixUniform]];
   [self.glkView setNeedsDisplay];
 }
 
-- (void)useBilateralFilter {
-  TMTextureProgram *program = [self.programFactory bilateralFilterProgram];
-  TMTextureProcessor *processor = [[TMTextureProcessor alloc]
-                                   initWithProgram:program];
-  [program use];
-  self.processor = processor;
-  [processor bindVector:GLKVector2Make(self.inputTexture.size.width,
-                                       self.inputTexture.size.height)
-              toUniform:@"textureDimensions"];
-  self.processedTexture = [self.processor processTexture:self.inputTexture withUniforms:@[]];
+- (void)useBilateralFilterWithAlpha1:(GLfloat)alpha1 alpha2:(GLfloat)alpha2 {
+  TMTextureProgram *mixerProgram = [self.programFactory textureMixingProgram];
+  id<TMProcessor> processor = [self.processorFactory processorWithProgram:mixerProgram];
+  TMScalarUniform *alphaUniform1 = [[TMScalarUniform alloc] initWithName:@"alpha1" scalar:alpha1];
+  TMScalarUniform *alphaUniform2 = [[TMScalarUniform alloc] initWithName:@"alpha2" scalar:alpha2];
+  TMTextureUniform *texture2 = [[TMTextureUniform alloc]
+                                  initWithTexture:self.bilateralFilteredTextureSmall
+                                             name:@"texture2" index:1];
+  TMTextureUniform *texture3 = [[TMTextureUniform alloc]
+                                  initWithTexture:self.bilateralFilteredTextureLarge
+                                             name:@"texture3" index:2];
+  self.processedTexture = [processor processTexture:self.inputTexture
+                                            withUniforms:@[texture2, texture3, alphaUniform1,
+                                                              alphaUniform2]];
   [self.glkView setNeedsDisplay];
+}
+
+- (TMTexture *)texture:(TMTexture *)texture
+      AfterBilateralWithNumberOfPasses:(NSUInteger)numberOfPasses {
+  TMTextureProgram *horizontalBilateral = [self.programFactory bilateralHorizontalFilterProgram];
+  TMTextureProgram *verticalBilateral = [self.programFactory bilateralVerticalFilterProgram];
+  TMTextureProcessor *bilateralProcessor = [self.processorFactory
+                                   processorWithPrograms:@[horizontalBilateral,
+                                                           verticalBilateral]];
+  id<TMProcessor> multipassBilateralProcessor = [self.processorFactory
+                                                 multipassProcessorFromProcessor:bilateralProcessor
+                                                                  numberOfPasses:numberOfPasses];
+  GLKVector2 vector = GLKVector2Make(texture.size.width, texture.size.height);
+  TMVector2DUniform *vectorUniform = [[TMVector2DUniform alloc] initWithVector:vector
+                                                                       uniform:@"textureDimensions"];
+  return [multipassBilateralProcessor processTexture:texture withUniforms:@[vectorUniform]];
 }
 
 -(void)saveProcessedTexture {

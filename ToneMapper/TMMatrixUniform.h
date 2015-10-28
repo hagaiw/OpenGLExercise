@@ -13,10 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Default initializer should not be called.
 - (instancetype)init NS_UNAVAILABLE;
 
-/// Initializes with \c matrix, uniform.
+/// Initializes with \c matrix, \c name.
 - (instancetype)initWithMatrix:(GLKMatrix4)matrix uniform:(NSString *)uniform;
 
-/// Matrix \c uniform should be linked to.
+/// Matrix \c name will be linked to.
 @property (readonly, nonatomic) GLKMatrix4 matrix;
 
 @end

@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setToneMatrix:(GLKMatrix4)toneMatrix;
 
 /// TODO: document
-- (void)useBilateralFilter;
+- (void)useBilateralFilterWithAlpha1:(GLfloat)alpha1 alpha2:(GLfloat)alpha2;
 
 @end
 

@@ -34,9 +34,6 @@ static NSString * const kProjectionUniform = @"projection";
 /// Binds the program using \c glUseProgram.
 - (void)use;
 
-/// Binds the given \c vector to the given \c uniform;
-- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform;
-
 /// Maps uniform names to handles.
 - (TMHandleDictionary *)handlesForUniforms;
 

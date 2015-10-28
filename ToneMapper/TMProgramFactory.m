@@ -19,11 +19,17 @@ static NSString * const kPassThroughFragmentShader = @"passThroughFragmentShader
 /// Name of a fragment shader which allows tone adjustments.
 static NSString * const kToneFragmentShader = @"toneAdjustmentFragmentShader";
 
-/// Name of a vertex shader that performs bilateral filtering on a texture.
-static NSString * const kBilateralVertexShader = @"TMBilateralVertexShader";
+/// Name of a vertex shader that performs horizontal bilateral filtering on a texture.
+static NSString * const kBilateralHorizontalVertexShader = @"TMBilateralHorizontalVertexShader";
+
+/// Name of a vertex shader that performs vertical bilateral filtering on a texture.
+static NSString * const kBilateralVerticalVertexShader = @"TMBilateralVerticalVertexShader";
 
 /// Name of a fragment shader that performs bilateral filtering on a texture.
 static NSString * const kBilateralFragmentShader = @"TMBilateralFragmentShader";
+
+/// Name of frament shader that mixes 3 different textures together;
+static NSString * const kMixerFragmentShader = @"TMMixingFragmentShader";
 
 #pragma mark -
 #pragma mark Factory Methods
@@ -46,12 +52,31 @@ static NSString * const kBilateralFragmentShader = @"TMBilateralFragmentShader";
   return [[TMTextureProgram alloc] initWithProgram:program];
 }
 
-- (TMTextureProgram *)bilateralFilterProgram {
+- (TMTextureProgram *)bilateralHorizontalFilterProgram {
   TMProgram *program = [[TMProgram alloc] initWithAttributes:[self defaultAttributes]
                                                     uniforms:[[self defaultUniforms]
                                                               arrayByAddingObject:@"textureDimensions"]
-                                            vertexShaderName:kBilateralVertexShader
+                                            vertexShaderName:kBilateralHorizontalVertexShader
                                           fragmentShaderName:kBilateralFragmentShader];
+  return [[TMTextureProgram alloc] initWithProgram:program];
+}
+
+- (TMTextureProgram *)bilateralVerticalFilterProgram {
+  TMProgram *program = [[TMProgram alloc] initWithAttributes:[self defaultAttributes]
+                                                    uniforms:[[self defaultUniforms]
+                                                              arrayByAddingObject:@"textureDimensions"]
+                                            vertexShaderName:kBilateralVerticalVertexShader
+                                          fragmentShaderName:kBilateralFragmentShader];
+  return [[TMTextureProgram alloc] initWithProgram:program];
+}
+
+- (TMTextureProgram *)textureMixingProgram {
+  TMProgram *program = [[TMProgram alloc] initWithAttributes:[self defaultAttributes]
+                                                    uniforms:[[self defaultUniforms]
+                                                              arrayByAddingObjectsFromArray:
+                                                                  @[@"texture2", @"texture3", @"alpha1", @"alpha2"]]
+                                            vertexShaderName:kPassThroughWithProjectionVertexShader
+                                          fragmentShaderName:kMixerFragmentShader];
   return [[TMTextureProgram alloc] initWithProgram:program];
 }
 

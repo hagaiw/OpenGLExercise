@@ -37,10 +37,6 @@
   [self.program useProgram];
 }
 
-- (void)bindVector:(GLKVector2)vector toUniform:(NSString *)uniform {
-  [self.program bindVector:vector toUniform:uniform];
-}
-
 - (TMHandleDictionary *)handlesForUniforms {
   return self.program.handlesForUniforms;
 }

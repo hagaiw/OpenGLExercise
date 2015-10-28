@@ -24,6 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
 /// Slider controlling the current adjustment.
 @property (weak, nonatomic) IBOutlet UISlider *toneAdjustmentSlider;
 
+/// Indicates whether bilateral contrast filter is active.
+@property (nonatomic) BOOL bilateralActive;
+
+@property (nonatomic) GLfloat fineBlurAlpha;
+@property (nonatomic) GLfloat midBlurAlpha;
+
 @end
 
 @implementation TMViewController
@@ -37,12 +43,14 @@ static const float kDefaultImageScale = 1.0;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
-  
   self.openGLVC = [[TMGLViewController alloc] init];
   [self addChildViewController:self.openGLVC];
   self.openGLVC.view.frame = self.glview.frame;
   [self.glview addSubview:self.openGLVC.view];
   [self.openGLVC didMoveToParentViewController:self];
+  self.bilateralActive = true;
+  self.midBlurAlpha = 1.0;
+  self.fineBlurAlpha = 1.0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -91,26 +99,30 @@ static const float kDefaultImageScale = 1.0;
 }
 
 - (IBAction)sliderMoved:(UISlider *)sender {
-  switch (self.currentToneAdjustment) {
-    case ToneAdjustmentBrightness:
-      self.toneAdjustmentGenerator.brightnessValue = sender.value;
-      break;
-    case ToneAdjustmentContrast:
-      self.toneAdjustmentGenerator.contrastValue = sender.value;
-      break;
-    case ToneAdjustmentSaturation:
-      self.toneAdjustmentGenerator.saturationValue = sender.value;
-      break;
-    case ToneAdjustmentTint:
-      self.toneAdjustmentGenerator.tintValue = sender.value;
-      break;
-    case ToneAdjustmentTemperature:
-      self.toneAdjustmentGenerator.temperatureValue = sender.value;
-      break;
-    default:
-      break;
+  if (self.bilateralActive) {
+    [self.openGLVC useBilateralFilterWithAlpha1:sender.value alpha2:0.0];
+  } else {
+    switch (self.currentToneAdjustment) {
+      case ToneAdjustmentBrightness:
+        self.toneAdjustmentGenerator.brightnessValue = sender.value;
+        break;
+      case ToneAdjustmentContrast:
+        self.toneAdjustmentGenerator.contrastValue = sender.value;
+        break;
+      case ToneAdjustmentSaturation:
+        self.toneAdjustmentGenerator.saturationValue = sender.value;
+        break;
+      case ToneAdjustmentTint:
+        self.toneAdjustmentGenerator.tintValue = sender.value;
+        break;
+      case ToneAdjustmentTemperature:
+        self.toneAdjustmentGenerator.temperatureValue = sender.value;
+        break;
+      default:
+        break;
+    }
+    [self.openGLVC setToneMatrix:[self.toneAdjustmentGenerator toneMatrix]];
   }
-  [self.openGLVC setToneMatrix:[self.toneAdjustmentGenerator toneMatrix]];
 }
 
 - (IBAction)toneAdjustmentSelected:(UISegmentedControl *)sender {
@@ -138,7 +150,7 @@ static const float kDefaultImageScale = 1.0;
 }
 
 - (IBAction)BilateralEffectSelected:(UISegmentedControl *)sender {
-  [self.openGLVC useBilateralFilter];
+  
 }
 
 #pragma mark -

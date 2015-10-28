@@ -13,7 +13,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface TMTextureFrameBuffer : NSObject <TMFrameBuffer>
 
 /// Initializes with \c size of the texture the frame buffer should be backed on.
+/// The texture will have a default textureIndex of 0.
 - (instancetype)initWithSize:(CGSize)size;
+
+/// Initializes with \c size of the texture the frame buffer should be backed on, \c textureIndex
+/// in case this texture is going to be used simultaneously with other textures.
+- (instancetype)initWithSize:(CGSize)size textureIndex:(GLuint)textureIndex;
 
 /// Binds the frame buffer.
 - (void)bind;
