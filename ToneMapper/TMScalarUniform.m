@@ -9,7 +9,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMScalarUniform ()
 
-/// Value of the attribute.
+/// Value of the scalar.
 @property (readonly, nonatomic) GLfloat scalar;
 
 @end

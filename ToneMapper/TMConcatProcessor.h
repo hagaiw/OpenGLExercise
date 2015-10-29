@@ -10,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Default initializer shouldn't be available.
 - (instancetype)init NS_UNAVAILABLE;
 
+/// A \c TMTexture processor that applies the given \c processors in order.
 - (instancetype)initWithProcsessors:(NSArray *)processors;
 
 @end

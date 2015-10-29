@@ -7,7 +7,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// A wrapper for the \c GLKView class that allows it to be treated as a frame-buffer.
+/// Wrapper for the \c GLKView class that allows it to be treated as a frame-buffer.
 @interface TMGLKViewFrameBuffer : NSObject <TMFrameBuffer>
 
 /// Default initializer should not be called.

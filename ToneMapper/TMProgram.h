@@ -8,7 +8,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Object wrapping an OpenGL program.
+/// Wrapper for an OpenGL program.
 @interface TMProgram : NSObject
 
 /// Initializes with attribute names \c attributes, uniform names \c uniforms, \c vertexShaderName

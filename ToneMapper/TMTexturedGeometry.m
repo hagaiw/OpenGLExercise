@@ -8,13 +8,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMTexturedGeometry ()
 
-/// The \c GLuint handle of the generated vertex buffer.
+/// \c GLuint handle of the generated vertex buffer.
 @property (nonatomic) GLuint vertexBuffer;
 
-/// The \c GLuint handle of the generated index buffer.
+/// \c GLuint handle of the generated index buffer.
 @property (nonatomic) GLuint indexBuffer;
 
-/// The \TMTexturedVertices object to use for this geometry.
+/// \c TMTexturedVertices object to use for this geometry.
 @property (nonatomic) id<TMVertices> vertices;
 
 @end

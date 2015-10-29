@@ -15,7 +15,6 @@
 #import "TMScaledPosition.h"
 #import "TMTextureProgram.h"
 #import "TMProjectionFactory.h"
-#import "TMToneTextureProcessor.h"
 #import "TMMatrixUniform.h"
 #import "TMVector2DUniform.h"
 #import "TMTextureUniform.h"

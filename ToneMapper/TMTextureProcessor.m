@@ -15,10 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMTextureProcessor ()
 
-/// The program used when processing the given \c TMTexture.
+/// Program used when processing the given \c TMTexture.
 @property (strong, nonatomic) TMTextureProgram *program;
 
-/// The geometry used to draw and process the given \c TMTexture.
+/// Geometry used to draw and process the given \c TMTexture.
 @property (strong, nonatomic) TMTexturedGeometry *geometry;
 
 /// Factory object used to create \c GLKMAtrix4 projections.
@@ -27,9 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Factory object used to create \c TMTextureGeometry.
 @property (strong, nonatomic) TMGeometryFactory *geometryFactory;
 
-/// The \c TMTextureFrameBuffer to which the given \c TMTexture is drawn while processing.
-/// Will be reinitialized whenver the given \c TMTexture's size does not fit the \c frameBuffer's
-/// size.
+/// \c TMTextureFrameBuffer to which the given \c TMTexture is drawn while processing.
+/// Will be reinitialized whenver the given \c TMTexture's size does not equal that of
+/// \c frameBuffer's.
 @property (strong, nonatomic) TMTextureFrameBuffer *frameBuffer;
 
 @end

@@ -5,6 +5,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// A class used to generate color-projections that apply brightness, contrast,
+/// saturation, tint and temperature adjustments.
 @interface TMToneAdjustmentGenerator : NSObject
 
 /// Types of tone-adjustments.
@@ -13,10 +15,11 @@ typedef NS_ENUM(NSInteger, ToneAdjustment) {
   ToneAdjustmentContrast,
   ToneAdjustmentSaturation,
   ToneAdjustmentTint,
-  ToneAdjustmentTemperature
+  ToneAdjustmentTemperature,
+  ToneAdjustmentNone
 };
 
-/// Tone matrix representing all the tone adjustments contained set in this generator.
+/// Tone matrix representing all the tone adjustments set in this generator.
 - (GLKMatrix4)toneMatrix;
 
 /// Normalized brightness value between 0 and 1.

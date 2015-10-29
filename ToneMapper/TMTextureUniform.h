@@ -6,6 +6,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// \c TMTexture uniform wrapper.
 @interface TMTextureUniform : NSObject <TMUniform>
 
 /// Initialize with \c texture, \c name, \c textureUnit.

@@ -10,7 +10,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMTextureUniform ()
 
+/// Value of this uniform.
 @property (readonly, strong, nonatomic) TMTexture *texture;
+
+/// Texture unit to be enabled before binding this uniform.
 @property (readonly, nonatomic) GLuint textureUnit;
 
 @end

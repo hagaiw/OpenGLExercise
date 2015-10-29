@@ -10,10 +10,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Protocol for OpenGL uniform variable wrappers.
 @protocol TMUniform <NSObject>
 
-/// Sets the value of the given handle to the value of this uniform.
+/// Links the uniform to the handle as it appears in the given \c handleDictionary.
 - (void)linkToProgramWithHandleDictionary:(TMHandleDictionary *)handleDictionary;
 
-/// Name of uniform variable as it appears in the shader.
+/// Name of the uniform variable as it appears in the shader.
 @property (readonly, strong, nonatomic) NSString *name;
 
 @end

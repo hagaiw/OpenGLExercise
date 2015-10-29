@@ -4,8 +4,10 @@
 #import <Foundation/Foundation.h>
 @class TMTexturedGeometry;
 
+/// Produces \c TMTextureGeometry objects.
 @interface TMGeometryFactory : NSObject
 
+/// Simple 4 vertices quad geometry.
 - (TMTexturedGeometry *)quadGeometry;
 
 @end

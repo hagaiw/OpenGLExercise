@@ -7,13 +7,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMConcatProcessor ()
 
+/// Processors to be applied in order.
 @property (readonly, strong, nonatomic) NSArray *processors;
 
 @end
 
 @implementation TMConcatProcessor
 
-- (instancetype)initWithProcsessors:(NSArray * __nonnull)processors {
+- (instancetype)initWithProcsessors:(NSArray *)processors {
   if (self = [super init]) {
     _processors = processors;
   }
@@ -24,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
   return [self processTexture:texture withUniforms:@[]];
 }
 
-- (TMTexture *)processTexture:(TMTexture * __nonnull)texture withUniforms:(NSArray *)uniforms {
+- (TMTexture *)processTexture:(TMTexture *)texture withUniforms:(NSArray *)uniforms {
   for (id<TMProcessor> processor in self.processors) {
     texture = [processor processTexture:texture withUniforms:uniforms];
   }

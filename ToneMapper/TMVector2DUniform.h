@@ -5,6 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// GLKVector2 uniform wrapper.
 @interface TMVector2DUniform : NSObject <TMUniform>
 
 /// Default initializer should not be called.

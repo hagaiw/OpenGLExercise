@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// An \c NSDictionary wrapper to be used with \c GLuint openGL handlers.
+/// \c NSDictionary wrapper to be used with \c GLuint openGL handlers.
 @interface TMHandleDictionary : NSObject
 
 /// Initializes with a \c dictionary of \c NSString name keys and \c NSNumber handle values.

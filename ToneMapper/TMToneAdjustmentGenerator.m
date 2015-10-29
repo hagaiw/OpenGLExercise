@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMToneAdjustmentGenerator
 
+/// The default value for all tone adjustments.
 static const float kDefaultToneAdjustmentValue = 0.5;
 
 #pragma mark -
@@ -74,7 +75,7 @@ static const float kDefaultToneAdjustmentValue = 0.5;
 
 - (void)setContrastValue:(GLfloat)contrastValue {
   _contrastValue = contrastValue;
-  GLfloat value = contrastValue*2;
+  GLfloat value = contrastValue * 2;
   self.contrast = GLKMatrix4Scale(GLKMatrix4Identity, value, value, value);
 }
 

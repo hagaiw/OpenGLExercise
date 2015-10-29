@@ -169,6 +169,7 @@ static const float kDefaultImageScale = 1.0;
   self.bilateralActive = false;
   self.bilateralTones.selectedSegmentIndex = -1;
   self.currentContrastType = NoneContrastType;
+  self.toneAdjustmentSlider.enabled = true;
 }
 
 - (IBAction)BilateralEffectSelected:(UISegmentedControl *)sender {
@@ -186,6 +187,7 @@ static const float kDefaultImageScale = 1.0;
   }
   self.bilateralActive = true;
   self.globalTones.selectedSegmentIndex = -1;
+  self.toneAdjustmentSlider.enabled = true;
 }
 
 #pragma mark -

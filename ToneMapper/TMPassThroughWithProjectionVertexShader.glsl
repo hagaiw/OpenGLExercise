@@ -1,3 +1,6 @@
+// Copyright (c) 2015 Lightricks. All rights reserved.
+// Created by Hagai Weinfeld.
+
 attribute vec4 position;
 attribute vec2 texCoordIn;
 

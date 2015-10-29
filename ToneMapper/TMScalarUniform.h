@@ -5,7 +5,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// A value class composed of a name-value pair representing a scalar program attribute.
+/// \c GLFloat uniform wrapper.
 @interface TMScalarUniform : NSObject <TMUniform>
 
 /// Default initializer should not be called.

@@ -11,13 +11,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Name of vertex shader which includes a projection uniform.
 static NSString * const kPassThroughWithProjectionVertexShader =
-                            @"passThroughWithProjectionVertexShader";
+                            @"TMPassThroughWithProjectionVertexShader";
 
 /// Name of a pass through fragment shader.
-static NSString * const kPassThroughFragmentShader = @"passThroughFragmentShader";
+static NSString * const kPassThroughFragmentShader = @"TMPassThroughFragmentShader";
 
 /// Name of a fragment shader which allows tone adjustments.
-static NSString * const kToneFragmentShader = @"toneAdjustmentFragmentShader";
+static NSString * const kToneFragmentShader = @"TMToneAdjustmentFragmentShader";
 
 /// Name of a vertex shader that performs horizontal bilateral filtering on a texture.
 static NSString * const kBilateralHorizontalVertexShader = @"TMBilateralHorizontalVertexShader";

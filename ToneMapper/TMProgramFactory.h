@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// Bilateral vertical filter program.
 - (TMTextureProgram *)bilateralVerticalFilterProgram;
 
-/// Texture Mixing Program.
+/// Texture Mixing Program that mixes the inputed texture with 2 others given by uniforms.
 - (TMTextureProgram *)textureMixingProgram;
 
 @end

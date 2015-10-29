@@ -42,7 +42,7 @@
                                     <action selector="pickImage:" destination="cAG-KK-2oG" eventType="touchUpInside" id="5dg-pP-feL"/>
                                 </connections>
                             </button>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="F0A-8f-5j4">
+                            <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="F0A-8f-5j4">
                                 <rect key="frame" x="14" y="524" width="572" height="31"/>
                                 <connections>
                                     <action selector="sliderMoved:" destination="cAG-KK-2oG" eventType="valueChanged" id="EP0-VH-601"/>
