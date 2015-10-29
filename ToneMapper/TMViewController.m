@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger, ContrastType) {
 /// The view to be used by \c openGLVC.
 @property (weak, nonatomic) IBOutlet UIView *glview;
 
-/// Holds the values of the current tone adjustments.
+/// Object holding the values of the current tone adjustments.
 @property (strong, nonatomic) TMToneAdjustmentGenerator *toneAdjustmentGenerator;
 
 /// Tone adjustment that the slider affects.
@@ -30,20 +30,54 @@ typedef NS_ENUM(NSInteger, ContrastType) {
 /// Slider controlling the current adjustment.
 @property (weak, nonatomic) IBOutlet UISlider *toneAdjustmentSlider;
 
-/// Indicates whether bilateral contrast filter is active.
-@property (nonatomic) BOOL bilateralActive;
-@property (nonatomic) ContrastType currentContrastType;
-@property (nonatomic) GLfloat fineBlurAlpha;
-@property (nonatomic) GLfloat midBlurAlpha;
+/// Currently selected local contrast.
+@property (nonatomic) ContrastType currentLocalContrastType;
+
+/// Current value of the fine contrast filter.
+@property (nonatomic) GLfloat fineContrastValue;
+
+/// Current value of the medium contrast filter.
+@property (nonatomic) GLfloat mediumContrastValue;
+
+/// Global tones segmented controller.
 @property (weak, nonatomic) IBOutlet UISegmentedControl *globalTones;
-@property (weak, nonatomic) IBOutlet UISegmentedControl *bilateralTones;
+
+/// Local contrast segmented controller.
+@property (weak, nonatomic) IBOutlet UISegmentedControl *localContrast;
 
 @end
 
 @implementation TMViewController
 
-/// The default scale of a loaded image.
+/// Default scale of a loaded image.
 static const float kDefaultImageScale = 1.0;
+
+/// Default tone value.
+static const float kDefaultToneValue = 0.5;
+
+/// Segmented controller deselected value.
+static const int kDeselectedValue = -1;
+
+/// Brightness tonal filter name.
+static NSString * const kBrightnessName = @"Brightness";
+
+/// Brightness tonal filter name.
+static NSString * const kContrastName = @"Contrast";
+
+/// Brightness tonal filter name.
+static NSString * const kSaturationName = @"Saturation";
+
+/// Brightness tonal filter name.
+static NSString * const kTintName = @"Tint";
+
+/// Brightness tonal filter name.
+static NSString * const kTemperatureName = @"Temperature";
+
+/// Brightness tonal filter name.
+static NSString * const kMediumContrastName = @"Medium";
+
+/// Brightness tonal filter name.
+static NSString * const kFineContrastName = @"Fine";
 
 #pragma mark -
 #pragma mark UIViewController
@@ -56,10 +90,9 @@ static const float kDefaultImageScale = 1.0;
   self.openGLVC.view.frame = self.glview.frame;
   [self.glview addSubview:self.openGLVC.view];
   [self.openGLVC didMoveToParentViewController:self];
-  self.bilateralActive = true;
-  self.midBlurAlpha = 0.5;
-  self.fineBlurAlpha = 0.5;
-  self.currentContrastType = NoneContrastType;
+  self.mediumContrastValue = kDefaultToneValue;
+  self.fineContrastValue = kDefaultToneValue;
+  self.currentLocalContrastType = NoneContrastType;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,18 +141,18 @@ static const float kDefaultImageScale = 1.0;
 }
 
 - (IBAction)sliderMoved:(UISlider *)sender {
-  if (self.bilateralActive) {
-    switch (self.currentContrastType) {
+  if (self.localContrast.selectedSegmentIndex != kDeselectedValue) {
+    switch (self.currentLocalContrastType) {
       case MediumContrastType:
-        self.midBlurAlpha = sender.value;
+        self.mediumContrastValue = sender.value;
         break;
       case FineContrastType:
-        self.fineBlurAlpha = sender.value;
+        self.fineContrastValue = sender.value;
         break;
       default:
         break;
     }
-    [self.openGLVC useBilateralFilterWithAlpha1:self.midBlurAlpha alpha2:self.fineBlurAlpha];
+    [self.openGLVC createLocalContrastWithMediumWeight:self.mediumContrastValue fineWeight:self.fineContrastValue];
   } else {
     switch (self.currentToneAdjustment) {
       case ToneAdjustmentBrightness:
@@ -146,48 +179,53 @@ static const float kDefaultImageScale = 1.0;
 
 - (IBAction)toneAdjustmentSelected:(UISegmentedControl *)sender {
   NSString *title =  ([sender titleForSegmentAtIndex:sender.selectedSegmentIndex]);
-  if ([title isEqualToString:@"Brightness"]) {
+  if ([title isEqualToString:kBrightnessName]) {
     self.currentToneAdjustment = ToneAdjustmentBrightness;
     self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.brightnessValue;
   }
-  else if ([title isEqualToString:@"Contrast"]) {
+  else if ([title isEqualToString:kContrastName]) {
     self.currentToneAdjustment = ToneAdjustmentContrast;
     self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.contrastValue;
   }
-  else if ([title isEqualToString:@"Saturation"]) {
+  else if ([title isEqualToString:kSaturationName]) {
     self.currentToneAdjustment = ToneAdjustmentSaturation;
     self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.saturationValue;
   }
-  else if ([title isEqualToString:@"Tint"]) {
+  else if ([title isEqualToString:kTintName]) {
     self.currentToneAdjustment = ToneAdjustmentTint;
     self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.tintValue;
   }
-  else if ([title isEqualToString:@"Temperature"]) {
+  else if ([title isEqualToString:kTemperatureName]) {
     self.currentToneAdjustment = ToneAdjustmentTemperature;
     self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.temperatureValue;
   }
-  self.bilateralActive = false;
-  self.bilateralTones.selectedSegmentIndex = -1;
-  self.currentContrastType = NoneContrastType;
+  self.localContrast.selectedSegmentIndex = kDeselectedValue;
+  self.currentLocalContrastType = NoneContrastType;
   self.toneAdjustmentSlider.enabled = true;
 }
 
-- (IBAction)BilateralEffectSelected:(UISegmentedControl *)sender {
+- (IBAction)bilateralEffectSelected:(UISegmentedControl *)sender {
   NSString *title =  ([sender titleForSegmentAtIndex:sender.selectedSegmentIndex]);
-  if ([title isEqualToString:@"Medium"]) {
-    self.currentContrastType = MediumContrastType;
-    self.toneAdjustmentSlider.value = self.midBlurAlpha;
+  if ([title isEqualToString:kMediumContrastName]) {
+    self.currentLocalContrastType = MediumContrastType;
+    self.toneAdjustmentSlider.value = self.mediumContrastValue;
   }
-  else if ([title isEqualToString:@"Fine"]) {
-    self.currentContrastType = FineContrastType;
-    self.toneAdjustmentSlider.value = self.fineBlurAlpha;
+  else if ([title isEqualToString:kFineContrastName]) {
+    self.currentLocalContrastType = FineContrastType;
+    self.toneAdjustmentSlider.value = self.fineContrastValue;
   }
   else {
-    self.currentContrastType = NoneContrastType;
+    self.currentLocalContrastType = NoneContrastType;
   }
-  self.bilateralActive = true;
-  self.globalTones.selectedSegmentIndex = -1;
+  self.globalTones.selectedSegmentIndex = kDeselectedValue;
   self.toneAdjustmentSlider.enabled = true;
+}
+
+- (IBAction)applyEffect:(UIButton *)sender {
+  self.globalTones.selectedSegmentIndex = kDeselectedValue;
+  self.localContrast.selectedSegmentIndex = kDeselectedValue;
+  self.toneAdjustmentSlider.value = kDefaultToneValue;
+  [self.openGLVC applyCurrentTextureState];
 }
 
 #pragma mark -

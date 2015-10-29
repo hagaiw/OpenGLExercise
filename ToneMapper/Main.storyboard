@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cAG-KK-2oG">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -20,9 +19,6 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kbc-Rj-TqD">
                                 <rect key="frame" x="550" y="562" width="34" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="34" id="rCm-bw-9jD"/>
-                                </constraints>
                                 <state key="normal" title="Save">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -32,9 +28,6 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cab-VP-ywi">
                                 <rect key="frame" x="495" y="562" width="47" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="47" id="81c-Qs-9Fl"/>
-                                </constraints>
                                 <state key="normal" title="Switch">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -71,41 +64,52 @@
                                 </connections>
                             </segmentedControl>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="cYe-0p-JOf">
-                                <rect key="frame" x="16" y="562" width="471" height="29"/>
+                                <rect key="frame" x="16" y="562" width="256" height="29"/>
                                 <segments>
                                     <segment title="Medium"/>
                                     <segment title="Fine"/>
                                 </segments>
                                 <connections>
-                                    <action selector="BilateralEffectSelected:" destination="cAG-KK-2oG" eventType="valueChanged" id="xEG-YM-9fT"/>
+                                    <action selector="bilateralEffectSelected:" destination="cAG-KK-2oG" eventType="valueChanged" id="HXG-ud-nLZ"/>
                                 </connections>
                             </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fXi-4Y-cjx">
+                                <rect key="frame" x="280" y="562" width="40" height="30"/>
+                                <state key="normal" title="Apply">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="applyEffect:" destination="cAG-KK-2oG" eventType="touchUpInside" id="VqK-DT-TlO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.43529412150382996" blue="0.81176471710205078" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="top" secondItem="kVJ-ej-L5i" secondAttribute="bottom" constant="8" symbolic="YES" id="1HM-vi-Mf8"/>
-                            <constraint firstItem="F0A-8f-5j4" firstAttribute="leading" secondItem="ThJ-B9-Ksw" secondAttribute="leading" id="2Sl-TU-tcd"/>
-                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="trailing" secondItem="F0A-8f-5j4" secondAttribute="trailing" id="BDO-Y5-UUz"/>
-                            <constraint firstItem="F0A-8f-5j4" firstAttribute="top" secondItem="ThJ-B9-Ksw" secondAttribute="bottom" constant="8" symbolic="YES" id="Kzm-66-NYn"/>
-                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="trailing" secondItem="F0A-8f-5j4" secondAttribute="trailing" id="LzD-Kh-VZN"/>
-                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="centerX" secondItem="ThJ-B9-Ksw" secondAttribute="centerX" id="Ms8-wj-JQx"/>
-                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="baseline" secondItem="cab-VP-ywi" secondAttribute="baseline" id="OFq-5H-3d3"/>
-                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="leading" secondItem="cab-VP-ywi" secondAttribute="trailing" constant="8" symbolic="YES" id="X2p-Mh-pZ6"/>
-                            <constraint firstItem="cab-VP-ywi" firstAttribute="leading" secondItem="cYe-0p-JOf" secondAttribute="trailing" constant="8" symbolic="YES" id="ZJk-gQ-jVE"/>
-                            <constraint firstItem="cYe-0p-JOf" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leadingMargin" id="azc-BL-6YG"/>
-                            <constraint firstItem="cYe-0p-JOf" firstAttribute="top" secondItem="F0A-8f-5j4" secondAttribute="bottom" constant="8" symbolic="YES" id="bad-ES-5BV"/>
-                            <constraint firstAttribute="trailing" secondItem="kVJ-ej-L5i" secondAttribute="trailing" id="eaN-np-Lps"/>
-                            <constraint firstItem="cYe-0p-JOf" firstAttribute="leading" secondItem="F0A-8f-5j4" secondAttribute="leading" id="hb9-oE-yRD"/>
-                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leading" id="kJE-NC-dpc"/>
-                            <constraint firstItem="fdQ-cS-44y" firstAttribute="top" secondItem="cab-VP-ywi" secondAttribute="bottom" constant="8" symbolic="YES" id="kjE-uC-KkM"/>
-                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="top" secondItem="d42-6J-Z3F" secondAttribute="top" id="qxM-JG-Kif"/>
-                            <constraint firstItem="cab-VP-ywi" firstAttribute="top" secondItem="cYe-0p-JOf" secondAttribute="top" id="tgK-nk-p27"/>
+                            <constraint firstAttribute="trailing" secondItem="kVJ-ej-L5i" secondAttribute="trailing" id="1d4-Pg-xgW"/>
+                            <constraint firstItem="F0A-8f-5j4" firstAttribute="leading" secondItem="cYe-0p-JOf" secondAttribute="leading" id="3zn-Wr-D81"/>
+                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="baseline" secondItem="cab-VP-ywi" secondAttribute="baseline" id="846-Lr-XRt"/>
+                            <constraint firstItem="cab-VP-ywi" firstAttribute="baseline" secondItem="fXi-4Y-cjx" secondAttribute="baseline" id="Cd9-wp-0pf"/>
+                            <constraint firstItem="F0A-8f-5j4" firstAttribute="trailing" secondItem="kbc-Rj-TqD" secondAttribute="trailing" id="Csz-9o-fmk"/>
+                            <constraint firstItem="fXi-4Y-cjx" firstAttribute="leading" secondItem="cYe-0p-JOf" secondAttribute="trailing" constant="8" symbolic="YES" id="FvG-6Y-GgX"/>
+                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leading" id="M4Y-G5-6p0"/>
+                            <constraint firstItem="kbc-Rj-TqD" firstAttribute="leading" secondItem="cab-VP-ywi" secondAttribute="trailing" constant="8" symbolic="YES" id="Taj-w0-vSs"/>
+                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="centerX" secondItem="kVJ-ej-L5i" secondAttribute="centerX" id="UKy-gH-o4l"/>
+                            <constraint firstItem="F0A-8f-5j4" firstAttribute="centerX" secondItem="fXi-4Y-cjx" secondAttribute="centerX" id="YHm-4L-diU"/>
+                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="top" secondItem="kVJ-ej-L5i" secondAttribute="bottom" constant="8" symbolic="YES" id="a95-MF-052"/>
+                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="leading" secondItem="F0A-8f-5j4" secondAttribute="leading" id="boy-jS-7Ih"/>
+                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="leading" secondItem="d42-6J-Z3F" secondAttribute="leadingMargin" id="dwe-nB-wt6"/>
+                            <constraint firstItem="F0A-8f-5j4" firstAttribute="top" secondItem="ThJ-B9-Ksw" secondAttribute="bottom" constant="8" symbolic="YES" id="eWD-vi-nCA"/>
+                            <constraint firstItem="cYe-0p-JOf" firstAttribute="top" secondItem="F0A-8f-5j4" secondAttribute="bottom" constant="8" symbolic="YES" id="i4h-cU-rjt"/>
+                            <constraint firstItem="cYe-0p-JOf" firstAttribute="top" secondItem="fXi-4Y-cjx" secondAttribute="top" id="iN8-tV-0ik"/>
+                            <constraint firstItem="ThJ-B9-Ksw" firstAttribute="trailing" secondItem="F0A-8f-5j4" secondAttribute="trailing" id="j6E-NA-p5V"/>
+                            <constraint firstItem="fdQ-cS-44y" firstAttribute="top" secondItem="fXi-4Y-cjx" secondAttribute="bottom" constant="8" symbolic="YES" id="qfb-E5-2ir"/>
+                            <constraint firstItem="kVJ-ej-L5i" firstAttribute="top" secondItem="d42-6J-Z3F" secondAttribute="top" id="vhT-p9-kQx"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bilateralTones" destination="cYe-0p-JOf" id="wiQ-NB-GfA"/>
                         <outlet property="globalTones" destination="ThJ-B9-Ksw" id="OPO-AB-BJO"/>
                         <outlet property="glview" destination="kVJ-ej-L5i" id="h3F-ly-PcA"/>
+                        <outlet property="localContrast" destination="cYe-0p-JOf" id="oAE-6V-bCX"/>
                         <outlet property="toneAdjustmentSlider" destination="F0A-8f-5j4" id="t9N-Cr-bUA"/>
                     </connections>
                 </viewController>

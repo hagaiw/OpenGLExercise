@@ -28,7 +28,7 @@ static NSString * const kBilateralVerticalVertexShader = @"TMBilateralVerticalVe
 /// Name of a fragment shader that performs bilateral filtering on a texture.
 static NSString * const kBilateralFragmentShader = @"TMBilateralFragmentShader";
 
-/// Name of frament shader that mixes 3 different textures together;
+/// Name of fragment shader that mixes 3 different textures together;
 static NSString * const kMixerFragmentShader = @"TMMixingFragmentShader";
 
 #pragma mark -
@@ -46,7 +46,7 @@ static NSString * const kMixerFragmentShader = @"TMMixingFragmentShader";
 - (TMTextureProgram *)globalToneProgram {
   TMProgram *program = [[TMProgram alloc] initWithAttributes:[self defaultAttributes]
                                                     uniforms:[[self defaultUniforms]
-                                                              arrayByAddingObject:@"toneAdjustment"]
+                                                              arrayByAddingObject:kToneAdjustment]
                                             vertexShaderName:kPassThroughWithProjectionVertexShader
                                           fragmentShaderName:kToneFragmentShader];
   return [[TMTextureProgram alloc] initWithProgram:program];
@@ -55,7 +55,7 @@ static NSString * const kMixerFragmentShader = @"TMMixingFragmentShader";
 - (TMTextureProgram *)bilateralHorizontalFilterProgram {
   TMProgram *program = [[TMProgram alloc] initWithAttributes:[self defaultAttributes]
                                                     uniforms:[[self defaultUniforms]
-                                                              arrayByAddingObject:@"textureDimensions"]
+                                                              arrayByAddingObject:kTextureDimensions]
                                             vertexShaderName:kBilateralHorizontalVertexShader
                                           fragmentShaderName:kBilateralFragmentShader];
   return [[TMTextureProgram alloc] initWithProgram:program];
@@ -64,7 +64,7 @@ static NSString * const kMixerFragmentShader = @"TMMixingFragmentShader";
 - (TMTextureProgram *)bilateralVerticalFilterProgram {
   TMProgram *program = [[TMProgram alloc] initWithAttributes:[self defaultAttributes]
                                                     uniforms:[[self defaultUniforms]
-                                                              arrayByAddingObject:@"textureDimensions"]
+                                                              arrayByAddingObject:kTextureDimensions]
                                             vertexShaderName:kBilateralVerticalVertexShader
                                           fragmentShaderName:kBilateralFragmentShader];
   return [[TMTextureProgram alloc] initWithProgram:program];
@@ -74,7 +74,9 @@ static NSString * const kMixerFragmentShader = @"TMMixingFragmentShader";
   TMProgram *program = [[TMProgram alloc] initWithAttributes:[self defaultAttributes]
                                                     uniforms:[[self defaultUniforms]
                                                               arrayByAddingObjectsFromArray:
-                                                                  @[@"texture2", @"texture3", @"alpha1", @"alpha2"]]
+                                                                  @[kStrongBlurTexture,
+                                                                    kWeakBlurTexture,
+                                                                    kFineWeight, kMediumWeight]]
                                             vertexShaderName:kPassThroughWithProjectionVertexShader
                                           fragmentShaderName:kMixerFragmentShader];
   return [[TMTextureProgram alloc] initWithProgram:program];

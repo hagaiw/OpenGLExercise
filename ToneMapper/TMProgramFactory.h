@@ -8,6 +8,29 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Name of a \c GLKMatrix4 uniform tone adjustment projection to be applied to the color value in
+/// the fragment shader.
+static NSString * const kToneAdjustment = @"toneAdjustment";
+
+/// Name of a \c GLKVector2 uniform indicating the size and width of the inputed texture.
+static NSString * const kTextureDimensions = @"textureDimensions";
+
+/// Name of a uniform texture created by applying a bilateral filter with a strong blur kernel
+/// to the inputed texture.
+static NSString * const kStrongBlurTexture = @"strongBlurTexture";
+
+/// Name of a uniform texture created by applying a bilateral filter with a strong blur kernel
+/// to the inputed texture.
+static NSString * const kWeakBlurTexture = @"weakBlurTexture";
+
+/// Name of a \c GLFloat uniform indicating weight given to the fine details of the image in a local
+/// contrast filter.
+static NSString * const kFineWeight = @"fineWeight";
+
+/// Name of a \c GLFloat uniform indicating weight given to the medium details of the image in a
+/// local contrast filter.
+static NSString * const kMediumWeight = @"mediumWeight";
+
 /// Factory class used to create new \c TMPrograms.
 @interface TMProgramFactory : NSObject
 
