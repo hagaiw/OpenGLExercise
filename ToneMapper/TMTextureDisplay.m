@@ -18,20 +18,20 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMTextureDisplay ()
 
-/// The \c TMframeBuffer to which \c TMTextures will be drawn.
-@property (strong, nonatomic) TMGLKViewFrameBuffer *frameBuffer;
+/// \c TMframeBuffer to which textures will be displayed.
+@property (readonly, strong, nonatomic) TMGLKViewFrameBuffer *frameBuffer;
 
-/// The \c TMProgram used to when drawing \c TMTextures.
-@property (strong, nonatomic) TMTextureProgram *program;
+/// \c TMProgram used when displaying textures.
+@property (readonly, strong, nonatomic) TMTextureProgram *program;
 
-/// The \c TMGeometry used when drawing.
-@property (strong, nonatomic) TMTexturedGeometry *geometry;
+/// \c TMGeometry used when displaying textures.
+@property (readonly, strong, nonatomic) TMTexturedGeometry *geometry;
 
-/// A factory class used to produce \c GLKMatrix4 projections.
-@property (strong, nonatomic) TMProjectionFactory *projectionFactory;
+/// Factory object used to produce \c GLKMatrix4 projections.
+@property (readonly, strong, nonatomic) TMProjectionFactory *projectionFactory;
 
-/// A \c TMTextureDrawer that is used when drawing \c TMTextures.
-@property (strong, nonatomic) TMTextureDrawer *textureDrawer;
+/// \c TMTextureDrawer that is used to draw textures.
+@property (readonly, strong, nonatomic) TMTextureDrawer *textureDrawer;
 
 @end
 
@@ -45,11 +45,11 @@ NS_ASSUME_NONNULL_BEGIN
                             program:(TMTextureProgram *)program
                            geometry:(TMTexturedGeometry *)geometry {
   if (self = [super init]) {
-    self.frameBuffer = frameBuffer;
-    self.program = program;
-    self.geometry = geometry;
-    self.projectionFactory = [TMProjectionFactory new];
-    self.textureDrawer = [TMTextureDrawer new];
+    _frameBuffer = frameBuffer;
+    _program = program;
+    _geometry = geometry;
+    _projectionFactory = [TMProjectionFactory new];
+    _textureDrawer = [TMTextureDrawer new];
   }
   return self;
 }
@@ -58,15 +58,15 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Texture Displaying
 #pragma mark -
 
-- (void)displayTexture:(TMTexture *)texture position:(TMScaledPosition *)displayData
+- (void)displayTexture:(TMTexture *)texture scaledPosition:(TMScaledPosition *)scaledPosition
         matrixUniforms:(NSArray *)matrixUniforms{
   
   GLKMatrix4 aspectFixProjection = [self.projectionFactory projectionFitSize:texture.size
                                                                       inSize:self.frameBuffer.size];
   GLKMatrix4 translationProjection = [self.projectionFactory
-                                      translationProjectionWithX:displayData.translation.x
-                                      y:displayData.translation.y];
-  GLKMatrix4 scaleProjection = [self.projectionFactory scaleProjectionWithScale:displayData.scale];
+                                      translationProjectionWithX:scaledPosition.translation.x
+                                      y:scaledPosition.translation.y];
+  GLKMatrix4 scaleProjection = [self.projectionFactory scaleProjectionWithScale:scaledPosition.scale];
   aspectFixProjection = [self.projectionFactory projectionByMultiplyingLeft:aspectFixProjection
                                                                right:scaleProjection];
   aspectFixProjection = [self.projectionFactory projectionByMultiplyingLeft:translationProjection

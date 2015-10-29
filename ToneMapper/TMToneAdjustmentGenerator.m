@@ -93,13 +93,13 @@ static const float kDefaultToneAdjustmentValue = 0.5;
 
 - (void)setTintValue:(GLfloat)tintValue {
   _tintValue = tintValue;
-  GLfloat value = ((tintValue * 2) - 1)/2;
+  GLfloat value = ((tintValue * 2) - 1)/7;
   self.tint = GLKMatrix4Translate(GLKMatrix4Identity, 0.0, value, 0.0);
 }
 
 - (void)setTemperatureValue:(GLfloat)temperatureValue {
   _temperatureValue = temperatureValue;
-  GLfloat value = ((temperatureValue * 2) - 1)/3;
+  GLfloat value = ((temperatureValue * 2) - 1)/6;
   self.temperature = GLKMatrix4Translate(GLKMatrix4Identity, value, 0.0, -value);
 }
 

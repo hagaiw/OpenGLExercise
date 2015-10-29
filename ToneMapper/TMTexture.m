@@ -19,11 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 
 - (instancetype)initWithImage:(UIImage *)image {
-  return [self initWithImage:image textureIndex:0];
+  return [self initWithImage:image textureUnit:0];
 }
 
-- (instancetype)initWithImage:(UIImage *)image textureIndex:(GLuint)textureIndex {
-  glActiveTexture(GL_TEXTURE0 + textureIndex);
+- (instancetype)initWithImage:(UIImage *)image textureUnit:(GLuint)textureUnit {
+  glActiveTexture(GL_TEXTURE0 + textureUnit);
   NSError *textureLoaderError;
   
   // Read the current openGL error, if exists, to address an issue where \c GLKTextureLoader
@@ -31,11 +31,11 @@ NS_ASSUME_NONNULL_BEGIN
   glGetError();
   GLKTextureInfo *info = [GLKTextureLoader textureWithCGImage:[image CGImage] options:nil error:&textureLoaderError];
   return [self initWithHandle:info.name target:info.target
-                         size:CGSizeMake(info.width, info.height) index:textureIndex];
+                         size:CGSizeMake(info.width, info.height) textureUnit:textureUnit];
 }
 
 - (instancetype)initWithHandle:(GLuint)handle target:(GLenum)target size:(CGSize)size
-                         index:(GLuint)index{
+                         textureUnit:(GLuint)textureUnit{
   if (self = [super init]) {
     _handle = handle;
     _target = target;
@@ -53,13 +53,13 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)bindAndlinkToHandle:(GLuint)handle {
-  [self bindAndlinkToHandle:handle withIndex:self.index];
+  [self bindAndlinkToHandle:handle withTextureUnit:self.textureUnit];
 }
 
-- (void)bindAndlinkToHandle:(GLuint)handle withIndex:(GLuint)index {
-  glActiveTexture(GL_TEXTURE0 + index);
+- (void)bindAndlinkToHandle:(GLuint)handle withTextureUnit:(GLuint)textureUnit {
+  glActiveTexture(GL_TEXTURE0 + textureUnit);
   [self bind];
-  glUniform1i(handle, index);
+  glUniform1i(handle, textureUnit);
 }
 
 

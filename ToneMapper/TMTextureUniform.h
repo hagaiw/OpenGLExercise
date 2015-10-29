@@ -8,8 +8,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMTextureUniform : NSObject <TMUniform>
 
-/// Initialize with \c texture, \c name, \c index.
-- (instancetype)initWithTexture:(TMTexture *)texture name:(NSString *)name index:(GLuint)index;
+/// Initialize with \c texture, \c name, \c textureUnit.
+- (instancetype)initWithTexture:(TMTexture *)texture name:(NSString *)name textureUnit:(GLuint)textureUnit;
 
 /// Name of uniform variable as it appears in the shader.
 @property (readonly, strong, nonatomic) NSString *name;

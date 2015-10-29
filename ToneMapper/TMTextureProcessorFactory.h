@@ -11,10 +11,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Factory class that produces \c TMTextureProcessor objects.
 @interface TMTextureProcessorFactory : NSObject
 
-/// \c TMProcessor with the given \c program.
+/// \c TMProcessor that uses the given \c program.
 - (id<TMProcessor>)processorWithProgram:(TMTextureProgram *)program;
 
-/// \c TMProcessor with the given \c programs to be applied in-order.
+/// \c TMProcessor that uses the given \c programs in-order.
 - (id<TMProcessor>)processorWithPrograms:(NSArray *)programs;
 
 /// \c TMProcessor that applies the given \c processor \c numberOfPasses times.

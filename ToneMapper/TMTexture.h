@@ -14,21 +14,21 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initializes with \c UIImage.
 - (instancetype)initWithImage:(UIImage *)image;
 
-/// Initializes with \c image, \c textureIndex.
-- (instancetype)initWithImage:(UIImage *)image textureIndex:(GLuint)textureIndex;
+/// Initializes with \c image, \c textureUnit.
+- (instancetype)initWithImage:(UIImage *)image textureUnit:(GLuint)textureUnit;
 
 /// Initializes with \c GLuint handle, \c GLenum target, \c CGSize size.
 - (instancetype)initWithHandle:(GLuint)handle target:(GLenum)target size:(CGSize)size
-                         index:(GLuint)index;
+                   textureUnit:(GLuint)textureUnit;
 
 /// Binds the texture by calling glBindTexture.
 - (void)bind;
 
-/// Binds and links the texture to \c handle by calling glUniform1i;
+/// Binds and links the texture to \c handle by calling glUniform1i with the default \c textureUnit;
 - (void)bindAndlinkToHandle:(GLuint)handle;
 
-/// Binds and links the texture to \c handle by calling glUniform1i with \c index;
-- (void)bindAndlinkToHandle:(GLuint)handle withIndex:(GLuint)index;
+/// Binds and links the texture to \c handle by calling glUniform1i with \c unit;
+- (void)bindAndlinkToHandle:(GLuint)handle withTextureUnit:(GLuint)textureUnit;
 
 /// Binding target of the texture.
 @property (readonly, nonatomic) GLenum target;
@@ -36,8 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Size of the texture.
 @property (readonly, nonatomic) CGSize size;
 
-/// OpenGL index of texture.
-@property (readonly, nonatomic) GLuint index;
+/// The default texture-unit to use when binding this texture.
+@property (readonly, nonatomic) GLuint textureUnit;
 
 @end
 

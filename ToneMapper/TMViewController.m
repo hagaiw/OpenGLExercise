@@ -9,6 +9,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TMViewController ()
 
+typedef NS_ENUM(NSInteger, ContrastType) {
+  MediumContrastType,
+  FineContrastType,
+  NoneContrastType
+};
+
 /// A view controller in charge of openGL handling.
 @property (strong, nonatomic) TMGLViewController *openGLVC;
 
@@ -26,9 +32,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Indicates whether bilateral contrast filter is active.
 @property (nonatomic) BOOL bilateralActive;
-
+@property (nonatomic) ContrastType currentContrastType;
 @property (nonatomic) GLfloat fineBlurAlpha;
 @property (nonatomic) GLfloat midBlurAlpha;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *globalTones;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *bilateralTones;
 
 @end
 
@@ -49,8 +57,9 @@ static const float kDefaultImageScale = 1.0;
   [self.glview addSubview:self.openGLVC.view];
   [self.openGLVC didMoveToParentViewController:self];
   self.bilateralActive = true;
-  self.midBlurAlpha = 1.0;
-  self.fineBlurAlpha = 1.0;
+  self.midBlurAlpha = 0.5;
+  self.fineBlurAlpha = 0.5;
+  self.currentContrastType = NoneContrastType;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -100,7 +109,17 @@ static const float kDefaultImageScale = 1.0;
 
 - (IBAction)sliderMoved:(UISlider *)sender {
   if (self.bilateralActive) {
-    [self.openGLVC useBilateralFilterWithAlpha1:sender.value alpha2:0.0];
+    switch (self.currentContrastType) {
+      case MediumContrastType:
+        self.midBlurAlpha = sender.value;
+        break;
+      case FineContrastType:
+        self.fineBlurAlpha = sender.value;
+        break;
+      default:
+        break;
+    }
+    [self.openGLVC useBilateralFilterWithAlpha1:self.midBlurAlpha alpha2:self.fineBlurAlpha];
   } else {
     switch (self.currentToneAdjustment) {
       case ToneAdjustmentBrightness:
@@ -147,10 +166,26 @@ static const float kDefaultImageScale = 1.0;
     self.currentToneAdjustment = ToneAdjustmentTemperature;
     self.toneAdjustmentSlider.value = self.toneAdjustmentGenerator.temperatureValue;
   }
+  self.bilateralActive = false;
+  self.bilateralTones.selectedSegmentIndex = -1;
+  self.currentContrastType = NoneContrastType;
 }
 
 - (IBAction)BilateralEffectSelected:(UISegmentedControl *)sender {
-  
+  NSString *title =  ([sender titleForSegmentAtIndex:sender.selectedSegmentIndex]);
+  if ([title isEqualToString:@"Medium"]) {
+    self.currentContrastType = MediumContrastType;
+    self.toneAdjustmentSlider.value = self.midBlurAlpha;
+  }
+  else if ([title isEqualToString:@"Fine"]) {
+    self.currentContrastType = FineContrastType;
+    self.toneAdjustmentSlider.value = self.fineBlurAlpha;
+  }
+  else {
+    self.currentContrastType = NoneContrastType;
+  }
+  self.bilateralActive = true;
+  self.globalTones.selectedSegmentIndex = -1;
 }
 
 #pragma mark -

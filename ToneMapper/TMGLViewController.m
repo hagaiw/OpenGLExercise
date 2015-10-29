@@ -141,7 +141,7 @@ static const int kBitsPerPixel = 32;
     self.processedTexture = [self.processor processTexture:self.inputTexture withUniforms:@[]];
     self.textureNeedsProcessing = false;
   }
-  [self.display displayTexture:self.processedTexture position:self.texturePosition
+  [self.display displayTexture:self.processedTexture scaledPosition:self.texturePosition
                 matrixUniforms:@[[[TMMatrixUniform alloc]
                                   initWithMatrix:[self.projectionFactory
                                                   verticalMirrorProjection]
@@ -155,7 +155,7 @@ static const int kBitsPerPixel = 32;
 - (void)loadTextureFromImage:(UIImage *)image {
   self.inputTexture = [[TMTexture alloc] initWithImage:image];
   self.bilateralFilteredTextureLarge = [self texture:self.inputTexture
-                                            AfterBilateralWithNumberOfPasses:5];
+                                            AfterBilateralWithNumberOfPasses:7];
   self.bilateralFilteredTextureSmall = [self texture:self.inputTexture
                                             AfterBilateralWithNumberOfPasses:2];
   self.textureNeedsProcessing = true;
@@ -200,10 +200,10 @@ static const int kBitsPerPixel = 32;
   TMScalarUniform *alphaUniform2 = [[TMScalarUniform alloc] initWithName:@"alpha2" scalar:alpha2];
   TMTextureUniform *texture2 = [[TMTextureUniform alloc]
                                   initWithTexture:self.bilateralFilteredTextureSmall
-                                             name:@"texture2" index:1];
+                                             name:@"texture2" textureUnit:1];
   TMTextureUniform *texture3 = [[TMTextureUniform alloc]
                                   initWithTexture:self.bilateralFilteredTextureLarge
-                                             name:@"texture3" index:2];
+                                             name:@"texture3" textureUnit:2];
   self.processedTexture = [processor processTexture:self.inputTexture
                                             withUniforms:@[texture2, texture3, alphaUniform1,
                                                               alphaUniform2]];

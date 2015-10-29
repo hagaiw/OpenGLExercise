@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="cAG-KK-2oG">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -69,7 +70,7 @@
                                     <action selector="toneAdjustmentSelected:" destination="cAG-KK-2oG" eventType="valueChanged" id="HVP-by-3HB"/>
                                 </connections>
                             </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="cYe-0p-JOf">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="cYe-0p-JOf">
                                 <rect key="frame" x="16" y="562" width="471" height="29"/>
                                 <segments>
                                     <segment title="Medium"/>
@@ -102,6 +103,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bilateralTones" destination="cYe-0p-JOf" id="wiQ-NB-GfA"/>
+                        <outlet property="globalTones" destination="ThJ-B9-Ksw" id="OPO-AB-BJO"/>
                         <outlet property="glview" destination="kVJ-ej-L5i" id="h3F-ly-PcA"/>
                         <outlet property="toneAdjustmentSlider" destination="F0A-8f-5j4" id="t9N-Cr-bUA"/>
                     </connections>
