@@ -7,7 +7,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Represents a \c matrix to be bound to a \uniform variable.
+/// Represents a \c matrix to be bound to a uniform variable.
 @interface TMMatrixUniform : NSObject <TMUniform>
 
 /// Default initializer should not be called.

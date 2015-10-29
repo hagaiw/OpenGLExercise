@@ -64,18 +64,6 @@ NS_ASSUME_NONNULL_BEGIN
   return [self.vertices numOfIndices];
 }
 
-#pragma mark -
-#pragma mark Testing
-#pragma mark -
-
-- (GLuint)vertexBufferHandle {
-  return self.vertexBuffer;
-}
-
-- (GLuint)indexBufferHandle {
-  return self.indexBuffer;
-}
-
 @end
 
 NS_ASSUME_NONNULL_END

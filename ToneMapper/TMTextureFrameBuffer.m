@@ -75,14 +75,6 @@ NS_ASSUME_NONNULL_BEGIN
   glDeleteFramebuffers(1, &handle);
 }
 
-#pragma mark -
-#pragma mark Testing
-#pragma mark -
-
-- (GLuint)frameBufferTexture {
-  return self.handle;
-}
-
 @end
 
 NS_ASSUME_NONNULL_END
