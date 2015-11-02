@@ -10,26 +10,25 @@ NS_ASSUME_NONNULL_BEGIN
 @implementation TMProgramFactory
 
 /// Name of vertex shader which includes a projection uniform.
-static NSString * const kPassThroughWithProjectionVertexShader =
-    @"TMPassThroughWithProjectionVertexShader";
+static NSString * const kPassThroughWithProjectionVertexShader = @"TMPassThroughWithProjection";
 
 /// Name of a pass through fragment shader.
-static NSString * const kPassThroughFragmentShader = @"TMPassThroughFragmentShader";
+static NSString * const kPassThroughFragmentShader = @"TMPassThrough";
 
 /// Name of a fragment shader which allows tone adjustments.
-static NSString * const kToneFragmentShader = @"TMToneAdjustmentFragmentShader";
+static NSString * const kToneFragmentShader = @"TMToneAdjustment";
 
 /// Name of a vertex shader that performs horizontal bilateral filtering on a texture.
-static NSString * const kBilateralHorizontalVertexShader = @"TMBilateralHorizontalVertexShader";
+static NSString * const kBilateralHorizontalVertexShader = @"TMBilateralHorizontal";
 
 /// Name of a vertex shader that performs vertical bilateral filtering on a texture.
-static NSString * const kBilateralVerticalVertexShader = @"TMBilateralVerticalVertexShader";
+static NSString * const kBilateralVerticalVertexShader = @"TMBilateralVertical";
 
 /// Name of a fragment shader that performs bilateral filtering on a texture.
-static NSString * const kBilateralFragmentShader = @"TMBilateralFragmentShader";
+static NSString * const kBilateralFragmentShader = @"TMBilateral";
 
 /// Name of fragment shader that mixes 3 different textures together;
-static NSString * const kMixerFragmentShader = @"TMMixingFragmentShader";
+static NSString * const kMixerFragmentShader = @"TMMixing";
 
 /// Name of a \c GLKMatrix4 uniform tone adjustment projection to be applied to the color value in
 /// the fragment shader.

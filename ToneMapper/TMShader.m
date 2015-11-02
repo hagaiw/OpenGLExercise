@@ -1,4 +1,4 @@
-// Copyright (c) 2015 Lightricks. All rights reserved.
+	// Copyright (c) 2015 Lightricks. All rights reserved.
 // Created by Hagai Weinfeld.
 #import "TMShader.h"
 
@@ -6,8 +6,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMShader
 
-/// Expected file extension for the given shader name.
-static NSString * const kShaderFileExtension = @"glsl";
+/// Expected file extension for fragment shaders.
+static NSString * const kFragmentShaderFileExtension = @"fsh";
+
+/// Expected file extension for vertex shaders.
+static NSString * const kVertexShaderFileExtension = @"vsh";
 
 /// Error message to present in the case of a compilation error.
 static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@";
@@ -29,14 +32,16 @@ static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@"
 
 /// Taken from: http://www.raywenderlich.com/3664/opengl-tutorial-for-ios-opengl-es-2-0
 - (GLuint)compileShader:(NSString*)shaderName withType:(GLenum)shaderType {
-  NSString* shaderString = [self shaderTextForShader:shaderName];
+  NSString* shaderString = [self shaderTextForShader:shaderName withType:shaderType ];
   GLuint shaderHandle = [self compileShaderWithContents:shaderString type:shaderType];
   return shaderHandle;
 }
 
-- (NSString *)shaderTextForShader:(NSString *)shaderName {
+- (NSString *)shaderTextForShader:(NSString *)shaderName withType:(GLenum)shaderType {
+  NSString *shaderFileExtension = (shaderType == GL_FRAGMENT_SHADER) ?
+      kFragmentShaderFileExtension : kVertexShaderFileExtension;
   NSString* shaderPath = [[NSBundle mainBundle] pathForResource:shaderName
-                                                         ofType:kShaderFileExtension];
+                                                         ofType:shaderFileExtension];
   NSError *error;
   NSString *shaderString = [NSString stringWithContentsOfFile:shaderPath
                                                      encoding:NSUTF8StringEncoding error:&error];
