@@ -8,7 +8,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Object wrapping an OpenGL program.
+/// Wrapper for an OpenGL program.
 @interface TMProgram : NSObject
 
 /// Initializes with attribute names \c attributes, uniform names \c uniforms, \c vertexShaderName
@@ -23,14 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// Maps uniform names to \GLuint handles.
 @property (readonly, nonatomic) TMHandleDictionary *handlesForUniforms;
 
-/// Binds the given \c scalarUniform to this program.
-- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform;
-
-/// Binds the given \c matrix to the the given \c uniform.
-- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform;
-
-/// Calls glUseProgram for the program.
+/// Calls glUseProgram for this program.
 - (void)useProgram;
+
+/// Sets the the value of this program's uniforms according to the given \c uniforms.
+/// Uniforms is an \c NSArray of \c TMUniforms.
+- (void)useProgramWithUniforms:(NSArray *)uniforms;
+
 
 @end
 

@@ -20,16 +20,16 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 
 - (instancetype)initWithSize:(CGSize)size {
-  return [self initWithSize:size textureIndex:0];
+  return [self initWithSize:size textureType:TMTextureTypeDefault];
 }
 
-- (instancetype)initWithSize:(CGSize)size textureIndex:(GLuint)textureIndex {
+- (instancetype)initWithSize:(CGSize)size textureType:(TMTextureType)textureType {
   if (self = [super init]) {
     glGenFramebuffers(1, &_handle);
     GLuint bufferTextureHandle;
     glGenTextures(1, &bufferTextureHandle);
     _texture = [[TMTexture alloc] initWithHandle:bufferTextureHandle target:GL_TEXTURE_2D
-                                                size:size index:textureIndex];
+                                                size:size];
     [self setupFrameBufferWithTextureHandle:bufferTextureHandle];
   }
   return self;
@@ -41,8 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA,  self.texture.size.width, self.texture.size.height, 0,
                GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, handle,
-                         0);
+  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, handle, 0);
   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

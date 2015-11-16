@@ -8,16 +8,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface TMTextureUniform ()
-
-/// Value of this uniform.
-@property (readonly, strong, nonatomic) TMTexture *texture;
-
-/// Texture unit to be enabled before binding this uniform.
-@property (readonly, nonatomic) GLuint textureUnit;
-
-@end
-
 @implementation TMTextureUniform
 
 #pragma mark -
@@ -25,24 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 
 - (instancetype)initWithTexture:(TMTexture *)texture name:(NSString *)name
-                    textureUnit:(GLuint)textureUnit {
+                    textureType:(TMTextureType)textureType {
   if (self = [super init]) {
     _texture = texture;
     _name = name;
-    _textureUnit = textureUnit;
+    _textureType = textureType;
   }
   return self;
 }
-
-#pragma mark -
-#pragma mark TMUniform
-#pragma mark -
-
-- (void)linkToProgramWithHandleDictionary:(TMHandleDictionary *)handleDictionary {
-  [self.texture bindAndlinkToHandle:[handleDictionary handleForKey:self.name]
-                    withTextureUnit:self.textureUnit];
-}
-
 @end
 
 NS_ASSUME_NONNULL_END

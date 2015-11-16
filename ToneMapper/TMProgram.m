@@ -3,10 +3,14 @@
 
 #import "TMProgram.h"
 
-#import "TMScalarUniform.h"
 #import "TMHandleDictionary.h"
-#import "TMShaderFactory.h"
+#import "TMMatrixUniform.h"
+#import "TMScalarUniform.h"
 #import "TMShader.h"
+#import "TMTexture.h"
+#import "TMTextureUniform.h"
+#import "TMUniform.h"
+#import "TMVector2DUniform.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -41,11 +45,10 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
                   vertexShaderName:(NSString *)vertexShaderName
                 fragmentShaderName:(NSString *)fragmentShaderName {
   if (self = [super init]) {
-    TMShaderFactory *shaderFactory = [[TMShaderFactory alloc] init];
-    self.vertexShader = [shaderFactory shaderForShaderName:vertexShaderName
-                                                shaderType:GL_VERTEX_SHADER];
-    self.fragmentShader = [shaderFactory shaderForShaderName:fragmentShaderName
-                                                  shaderType:GL_FRAGMENT_SHADER];
+    self.vertexShader = [[TMShader alloc] initWithShaderName:vertexShaderName
+                                                  shaderType:GL_VERTEX_SHADER];
+    self.fragmentShader = [[TMShader alloc] initWithShaderName:fragmentShaderName
+                                                    shaderType:GL_FRAGMENT_SHADER];
     self.program = [self programWithVertexShader:self.vertexShader.handle
                                   fragmentShader:self.fragmentShader.handle];
     _handlesForAttributes = [self handleDictionaryFromAttributes:attributes
@@ -119,7 +122,7 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
 }
 
 #pragma mark -
-#pragma mark OpenGL Binding
+#pragma mark OpenGL
 #pragma mark -
 
 - (void)useProgram {
@@ -130,12 +133,26 @@ static const GLuint kOpenGLIncorrectParameterName = -1;
   }
 }
 
-- (void)bindScalarUniform:(TMScalarUniform *)scalarUniform {
-  glUniform1f([self.handlesForUniforms handleForKey:scalarUniform.name], scalarUniform.value);
-}
+- (void)useProgramWithUniforms:(NSArray *)uniforms {
+  [self useProgram];
+  for (id<TMUniform> uniform in uniforms) {
+    GLuint handle = [self.handlesForUniforms handleForKey:uniform.name];
 
-- (void)bindMatrix:(GLKMatrix4)matrix toUniform:(NSString *)uniform {
-  glUniformMatrix4fv([self.handlesForUniforms handleForKey:uniform], 1, GL_FALSE, matrix.m);
+    if ([uniform isKindOfClass:[TMScalarUniform class]]) {
+      glUniform1f(handle, ((TMScalarUniform *)uniform).scalar);
+    }
+    else if ([uniform isKindOfClass:[TMMatrixUniform class]]) {
+      glUniformMatrix4fv(handle, 1, 0, ((TMMatrixUniform *)uniform).matrix.m);
+    }
+    else if ([uniform isKindOfClass:[TMVector2DUniform class]]) {
+      glUniform2fv(handle, 1, ((TMVector2DUniform *)uniform).vector.v);
+    }
+    else if ([uniform isKindOfClass:[TMTextureUniform class]]) {
+      TMTextureUniform *textureUniform = (TMTextureUniform *)uniform;
+      [textureUniform.texture bindAndlinkToHandle:handle
+                                  withTextureType:textureUniform.textureType];
+    }
+  }
 }
 
 #pragma mark -

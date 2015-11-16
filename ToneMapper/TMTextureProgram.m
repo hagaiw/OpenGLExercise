@@ -42,7 +42,7 @@ NSString * const kProjectionUniform = @"projection";
 }
 
 #pragma mark -
-#pragma mark OpenGL Binding
+#pragma mark OpenGL
 #pragma mark -
 
 - (void)use {
@@ -51,6 +51,10 @@ NSString * const kProjectionUniform = @"projection";
 
 - (TMHandleDictionary *)handlesForUniforms {
   return self.program.handlesForUniforms;
+}
+
+- (void)useProgramWithUniforms:(NSArray *)uniforms {
+  [self.program useProgramWithUniforms:uniforms];
 }
 
 @end

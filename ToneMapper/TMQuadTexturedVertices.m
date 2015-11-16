@@ -33,60 +33,60 @@ static const GLubyte kQuadIndices[] = {
   2, 3, 0
 };
 
-+ (void *)vertices {
+- (void *)vertices {
   return (void *)kQuadVertices;
 }
 
-+ (GLubyte *)indices {
+- (GLubyte *)indices {
   return (GLubyte *)kQuadIndices;
 }
 
-+ (GLsizei)numOfVertices {
+- (GLsizei)numOfVertices {
   return sizeof(kQuadVertices)/sizeof(QuadVertex);
 }
 
-+ (GLsizei)numOfPositionCoordinates {
+- (GLsizei)numOfPositionCoordinates {
   return kQuadNumOfPositionCoordinates;
 }
 
-+ (GLsizei)numOfTextureCoordinates {
+- (GLsizei)numOfTextureCoordinates {
   return kQuadNumOfTextureCoordinates;
 }
 
-+ (GLsizei)numOfIndices {
+- (GLsizei)numOfIndices {
   return sizeof(kQuadIndices)/sizeof(kQuadIndices[0]);
 }
 
-+ (GLenum)positionType {
+- (GLenum)positionType {
   return GL_FLOAT;
 }
 
-+ (GLenum)textureType {
+- (GLenum)textureType {
   return GL_FLOAT;
 }
 
-+ (GLuint)indexSize {
+- (GLuint)indexSize {
   return sizeof(kQuadIndices[0]);
 }
 
-+ (GLuint)verticesArraySize {
+- (GLuint)verticesArraySize {
   return sizeof(kQuadVertices);
 }
 
-+ (GLuint)indicesArraySize {
+- (GLuint)indicesArraySize {
   return sizeof(kQuadIndices);
 }
 
-+ (GLuint)vertexSize {
+- (GLuint)vertexSize {
   return sizeof(QuadVertex);
 }
 
-+ (GLvoid *)positionPointer {
+- (GLvoid *)positionPointer {
   return 0;
 }
 
-+ (GLvoid *)texturePointer {
-  return (GLvoid *)(sizeof(kQuadVertices[0].Position[0]) * [[self class] numOfPositionCoordinates]);
+- (GLvoid *)texturePointer {
+  return (GLvoid *)(sizeof(kQuadVertices[0].Position[0]) * [self numOfPositionCoordinates]);
 }
 
 @end
