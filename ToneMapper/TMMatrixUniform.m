@@ -3,14 +3,26 @@
 
 #import "TMMatrixUniform.h"
 
+#import "TMHandleDictionary.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMMatrixUniform
 
+@synthesize name = _name;
+
+#pragma mark -
+#pragma mark Initialization
+#pragma mark -
+
+- (instancetype)init {
+  return nil;
+}
+
 - (instancetype)initWithMatrix:(GLKMatrix4)matrix uniform:(NSString *)uniform {
   if (self = [super init]) {
     _matrix = matrix;
-    _uniform = uniform;
+    _name = uniform;
   }
   return self;
 }

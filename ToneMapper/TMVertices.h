@@ -11,46 +11,46 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol TMVertices <NSObject>
 
 /// Pointer to an array of vertices.
-+ (void *)vertices;
+- (void *)vertices;
 
 /// Pointer to an array of vertex indices.
-+ (GLubyte *)indices;
+- (GLubyte *)indices;
 
 /// Number of vertices in the \c vertices array.
-+ (GLsizei)numOfVertices;
+- (GLsizei)numOfVertices;
 
 /// Number of position coordinates each vertex has.
-+ (GLsizei)numOfPositionCoordinates;
+- (GLsizei)numOfPositionCoordinates;
 
 /// Number of texture coordinates each vertex has.
-+ (GLsizei)numOfTextureCoordinates;
+- (GLsizei)numOfTextureCoordinates;
 
 /// Number of indices in the \c indices array.
-+ (GLsizei)numOfIndices;
+- (GLsizei)numOfIndices;
 
 /// Type of each position coordinate.
-+ (GLenum)positionType;
+- (GLenum)positionType;
 
 /// Type of each texture coordinate.
-+ (GLenum)textureType;
+- (GLenum)textureType;
 
 /// Size of each index.
-+ (GLuint)indexSize;
+- (GLuint)indexSize;
 
 /// Size of each vertex.
-+ (GLuint)vertexSize;
+- (GLuint)vertexSize;
 
 /// Size of the \c vertices array.
-+ (GLuint)verticesArraySize;
+- (GLuint)verticesArraySize;
 
 /// Size pf the \c indices array.
-+ (GLuint)indicesArraySize;
+- (GLuint)indicesArraySize;
 
 /// Pointer to the first position coordinate.
-+ (GLvoid *)positionPointer;
+- (GLvoid *)positionPointer;
 
 /// Pointer to the first texture coordinate.
-+ (GLvoid *)texturePointer;
+- (GLvoid *)texturePointer;
 
 @end
 

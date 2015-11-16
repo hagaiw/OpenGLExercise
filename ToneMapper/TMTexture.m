@@ -14,9 +14,22 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMTexture
 
+/// Default texture unit to use.
+static const NSInteger defaultTextureUnit = 0;
+
+/// Texture unit to use for uniform variable textures #1.
+static const NSInteger uniformTextureUnit1 = 1;
+
+/// Texture unit to use for uniform variable textures #2.
+static const NSInteger uniformTextureUnit2 = 2;
+
 #pragma mark -
 #pragma mark Initialize
 #pragma mark -
+
+- (instancetype)init {
+  return nil;
+}
 
 - (instancetype)initWithImage:(UIImage *)image {
   glActiveTexture(GL_TEXTURE0);
@@ -39,6 +52,20 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
+- (GLuint)textureUnitFromTextureType:(TMTextureType)textureType {
+  switch (textureType) {
+    case TMTextureTypeDefault:
+      return defaultTextureUnit;
+      break;
+    case TMTextureTypeUniform1:
+      return uniformTextureUnit1;
+    case TMTextureTypeUniform2:
+      return uniformTextureUnit2;
+    default:
+      break;
+  }
+}
+
 #pragma mark -
 #pragma mark OpenGL
 #pragma mark -
@@ -47,6 +74,11 @@ NS_ASSUME_NONNULL_BEGIN
   glBindTexture(self.target, self.handle);
 }
 
+- (void)bindAndlinkToHandle:(GLuint)handle withTextureType:(TMTextureType)textureType {
+  glActiveTexture(GL_TEXTURE0 + [self textureUnitFromTextureType:textureType]);
+  [self bind];
+  glUniform1i(handle, [self textureUnitFromTextureType:textureType]);
+}
 
 #pragma mark -
 #pragma mark Destruction

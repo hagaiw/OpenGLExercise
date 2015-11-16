@@ -14,20 +14,16 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Initialization
 #pragma mark -
 
+- (instancetype)init {
+  return nil;
+}
+
 - (instancetype)initWithVector:(GLKVector2)vector uniform:(NSString *)name {
   if (self = [super init]) {
     _vector = vector;
     _name = name;
   }
   return self;
-}
-
-#pragma mark -
-#pragma mark TMUniform
-#pragma mark -
-
-- (void)linkToProgramWithHandleDictionary:(TMHandleDictionary *)handleDictionary {
-  glUniform2fv([handleDictionary handleForKey:self.name], 1, self.vector.v);
 }
 
 @end

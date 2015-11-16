@@ -34,6 +34,10 @@ extern NSString * const kProjectionUniform;
 /// Binds the program using \c glUseProgram.
 - (void)use;
 
+/// Sets the the value of this program's uniforms according to the given \c uniforms.
+/// Uniforms is an \c NSArray of \c TMUniforms.
+- (void)useProgramWithUniforms:(NSArray *)uniforms;
+
 /// Maps uniform names to handles.
 - (TMHandleDictionary *)handlesForUniforms;
 

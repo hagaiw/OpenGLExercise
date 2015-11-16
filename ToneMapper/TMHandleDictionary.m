@@ -18,6 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Initialization
 #pragma mark -
 
+- (instancetype)init {
+  return nil;
+}
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
   if (self = [super init]) {
     self.dictionary = [dictionary copy];

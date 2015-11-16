@@ -21,6 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Initialization
 #pragma mark -
 
+- (instancetype)init {
+  return nil;
+}
+
 - (instancetype)initWithGLKView:(GLKView *)glkView {
   if (self = [super init]) {
     _glkView = glkView;

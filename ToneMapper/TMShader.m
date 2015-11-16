@@ -6,8 +6,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation TMShader
 
-/// Expected file extension for the given shader name.
-static NSString * const kShaderFileExtension = @"glsl";
+/// File extension for fragment shaders.
+static NSString * const kFragmentShaderFileExtension = @"fsh";
+
+/// File extension for vertex shaders.
+static NSString * const kVertexShaderFileExtension = @"vsh";
 
 /// Error message to present in the case of a compilation error.
 static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@";
@@ -15,6 +18,10 @@ static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@"
 #pragma mark -
 #pragma mark Initialize
 #pragma mark -
+
+- (instancetype)init {
+  return nil;
+}
 
 - (instancetype)initWithShaderName:(NSString *)shaderName shaderType:(GLenum)shaderType {
   if (self = [super init]) {
@@ -29,16 +36,24 @@ static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@"
 
 /// Taken from: http://www.raywenderlich.com/3664/opengl-tutorial-for-ios-opengl-es-2-0
 - (GLuint)compileShader:(NSString*)shaderName withType:(GLenum)shaderType {
-  NSString* shaderString = [self shaderTextForShader:shaderName];
-  GLuint shaderHandle = [self compileShader:shaderString withType:shaderType];
+  NSString* shaderString = [self shaderTextForShader:shaderName withType:shaderType ];
+  GLuint shaderHandle = [self compileShaderWithSource:shaderString type:shaderType];
   return shaderHandle;
 }
 
-- (NSString *)shaderTextForShader:(NSString *)shaderName {
-  NSString* shaderPath = [[NSBundle mainBundle] pathForResource:shaderName
-                                                         ofType:kShaderFileExtension];
-  NSError* error;
-  NSString* shaderString = [NSString stringWithContentsOfFile:shaderPath
+- (NSString *)shaderTextForShader:(NSString *)shaderName withType:(GLenum)shaderType {
+  NSString *shaderFileExtension;
+  switch (shaderType) {
+    case GL_FRAGMENT_SHADER:
+      shaderFileExtension = kFragmentShaderFileExtension;
+      break;
+    case GL_VERTEX_SHADER:
+      shaderFileExtension = kVertexShaderFileExtension;
+  }
+  NSString *shaderPath = [[NSBundle mainBundle] pathForResource:shaderName
+                                                         ofType:shaderFileExtension];
+  NSError *error;
+  NSString *shaderString = [NSString stringWithContentsOfFile:shaderPath
                                                      encoding:NSUTF8StringEncoding error:&error];
   if (!shaderString) {
     NSLog(kShaderCompileErrorMessage, error.localizedDescription);
@@ -47,7 +62,7 @@ static NSString * const kShaderCompileErrorMessage = @"Error loading shader: %@"
   return shaderString;
 }
 
-- (GLuint)compileShaderWithContents:(NSString *)shaderContents type:(GLenum)shaderType {
+- (GLuint)compileShaderWithSource:(NSString *)shaderContents type:(GLenum)shaderType {
   GLuint shaderHandle = glCreateShader(shaderType);
   const char * shaderStringUTF8 = [shaderContents UTF8String];
   int shaderStringLength = (int)[shaderContents length];

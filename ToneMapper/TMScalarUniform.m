@@ -1,6 +1,9 @@
 // Copyright (c) 2015 Lightricks. All rights reserved.
 // Created by Hagai Weinfeld.
+
 #import "TMScalarUniform.h"
+
+#import "TMHandleDictionary.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -10,13 +13,17 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Initialization
 #pragma mark -
 
-@synthesize value = _value;
+@synthesize scalar = _scalar;
 @synthesize name = _name;
 
-- (instancetype)initWithName:(NSString *)name value:(GLfloat)value {
+- (instancetype)init {
+  return nil;
+}
+
+- (instancetype)initWithName:(NSString *)name scalar:(GLfloat)scalar {
   if (self = [super init]) {
     _name = name;
-    _value = value;
+    _scalar = scalar;
   }
   return self;
 }
